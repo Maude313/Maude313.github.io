@@ -13,16 +13,22 @@ controls.enableZoom = true;
 const textureLoader = new THREE.TextureLoader();
 const skyTexture = textureLoader.load('sky.jpg'); // Replace 'sky.jpg' with your sky texture's filename or URL
 // Create a sphere geometry
-const sphereGeometry = new THREE.SphereGeometry(5, 32, 32); // Adjust the sphere size and detail as needed
+const sphereGeometry = new THREE.SphereGeometry(30, 32, 32); // Adjust the sphere size and detail as needed
 // Create a material with the sky texture
 const sphereMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
 // Create the sky sphere
 const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 scene.add(skySphere);
 // Animation loop
-    renderer.render(scene, camera);
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Update animations, positions, or other logic here
+
+  renderer.render(scene, camera);
+}
     
-// animate();
+animate();
 window.addEventListener("keydown", function (event) {  
     if (event.key !== undefined) {
       // Handle the event with KeyboardEvent.key
