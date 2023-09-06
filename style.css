@@ -1,0 +1,19 @@
+.arrow-button {
+    width: 500;
+    height: 500;
+    border: solid black;
+    display: inline-block;
+    padding: 3px;
+}
+
+#rotate-right {
+    border-width: 0 3px 3px 0;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+#rotate-left {
+    border-width: 0 3px 3px 0;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
