@@ -1,9 +1,10 @@
+
 document.addEventListener('DOMContentLoaded', function () {
   // Create a scene
   const scene = new THREE.Scene();
   // Create a camera
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 0.0; // Adjust the camera position as needed
+  camera.position.z = 0.001; // Adjust the camera position as needed
   // Create a renderer
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -20,6 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // Create the sky sphere
   const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   scene.add(skySphere);
+  // Add lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(1, 1, 1);
+  scene.add(directionalLight);
 
   // Animation loop
   function animate() {
@@ -54,17 +62,17 @@ document.addEventListener('DOMContentLoaded', function () {
   rotateLeftButton.addEventListener('click', rotateCameraLeft);
   rotateRightButton.addEventListener('click', rotateCameraRight);
 
-  const rotationAmount = 10; // Adjust the rotation speed as needed
+  const rotationAmount = 10; // Adjust the rotation as needed
 
   function rotateCameraLeft() {
     camera.rotation.y += rotationAmount;
     animate();
-    console.log(controls.object.position);
+    console.log(controls.object.rotation);
   }
 
   function rotateCameraRight() {
     camera.rotation.y -= rotationAmount;
     animate();
-    console.log(controls.object.rotatio);
+    console.log(controls.object.rotation);
   }
 });

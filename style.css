@@ -1,12 +1,26 @@
-.arrow-button {
-    width: 500;
-    height: 500;
-    border: solid black;
-    display: inline-block;
-    padding: 3px;
-}
 
-#rotate-right {
+.arrow-button {
+    width: 100px;
+    height: 100px;
+    background-image: url('./neonarrow.png');
+    border: none;
+    padding: 0;
+    background-size:contain;
+    position: absolute;
+    border: none;
+    padding: 0;
+  }
+  #rotate-right{
+    bottom: 10px;
+    right: 10px;
+    transform: scaleX(-1);
+  }
+  #rotate-left{
+    bottom: 10px;
+    left: 10px;
+  }
+
+/* #rotate-right {
     border-width: 0 3px 3px 0;
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
@@ -16,4 +30,4 @@
     border-width: 0 3px 3px 0;
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
-}
+} */
