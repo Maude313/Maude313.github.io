@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('scene-container').appendChild(renderer.domElement);
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = true;
+  controls.enableZoom = false;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
   const skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
@@ -29,7 +29,18 @@ document.addEventListener('DOMContentLoaded', function () {
   directionalLight.position.set(1, 1, 1);
   scene.add(directionalLight);
 
-//Rotate the sphere
+  // Handle window resize
+  window.addEventListener('resize', () => {
+  const newWidth = window.innerWidth;
+  const newHeight = window.innerHeight;
+
+  // Update camera aspect ratio and renderer size
+  camera.aspect = newWidth / newHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(newWidth, newHeight);
+});
+
+//Rotate the sphere slightly continuously
   let rotationDirection = 1; // Initial rotation direction (1 for clockwise, -1 for counterclockwise)
   let changeDirectionIntervalX = 9000; // Interval to change direction (in milliseconds)
   let lastDirectionChange = performance.now();
@@ -79,13 +90,45 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   });
 
-  // Get references to HTML elements
-  const aboutThisWebsite = document.getElementById('content');
+//   // Get references to HTML elements
+//   const aboutThisWebsite = document.getElementById('content');
 
-  // Add an event listener to the button
-  aboutThisWebsite.addEventListener('click', () => {
-      // Change the content of the target element
-      aboutThisWebsite.innerHTML = 'New content has been loaded!';
+//   // Add an event listener to the button
+//   aboutThisWebsite.addEventListener('click', () => {
+//       // Change the content of the target element
+//       aboutThisWebsite.innerHTML = 'New content has been loaded!';
+// });
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    // If not in fullscreen mode, enter fullscreen
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    }
+  } else {
+    // If in fullscreen mode, exit fullscreen
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+}
+
+let fullscreenBtn = document.getElementById("toggle_full_screen");
+
+fullscreenBtn.addEventListener("click", function() {
+  toggleFullScreen();
 });
   // Arrow buttons
   // const cameraPos1 = camera.rotation(0, -60, 0);
