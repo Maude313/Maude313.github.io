@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   controls.enableZoom = true;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
-  const skyTexture = textureLoader.load('sky3.jpg'); // jpg image for the background, the skybox image
+  const skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
   const sphereGeometry = new THREE.SphereGeometry(1, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
@@ -29,10 +29,39 @@ document.addEventListener('DOMContentLoaded', function () {
   directionalLight.position.set(1, 1, 1);
   scene.add(directionalLight);
 
+//Rotate the sphere
+  let rotationDirection = 1; // Initial rotation direction (1 for clockwise, -1 for counterclockwise)
+  let changeDirectionIntervalX = 9000; // Interval to change direction (in milliseconds)
+  let lastDirectionChange = performance.now();
+
+  function hoveringanimation() {
+    requestAnimationFrame(hoveringanimation);
+    
+    if (performance.now() - lastDirectionChange > changeDirectionIntervalX) {
+      // Reverse the rotation direction
+      rotationDirection *= -1;
+      lastDirectionChange = performance.now();
+    }
+    
+    let xOrY = Math.random();
+    // Rotate the sky sphere based on the current rotation axis and direction
+    if (xOrY < 0.7) {
+      skySphere.rotation.x += 0.00009 * rotationDirection;
+      }
+      else {
+          skySphere.rotation.y += 0.00009 * rotationDirection;
+      }
+
+      renderer.render(scene, camera);
+  }
+
+  hoveringanimation();
+  
   // Animation loop
   function animate() {
     requestAnimationFrame(animate);
     // Update animations, positions, or other logic here
+
     renderer.render(scene, camera);
   };
       
@@ -50,29 +79,37 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   });
 
+  // Get references to HTML elements
+  const aboutThisWebsite = document.getElementById('content');
+
+  // Add an event listener to the button
+  aboutThisWebsite.addEventListener('click', () => {
+      // Change the content of the target element
+      aboutThisWebsite.innerHTML = 'New content has been loaded!';
+});
   // Arrow buttons
   // const cameraPos1 = camera.rotation(0, -60, 0);
   // const cameraPos2 = camera.rotation(0, -30, 0);
   // const cameraPos3 = camera.rotation(0, -20, 0);
   // const cameraPos4 = camera.rotation(0, 1.55, 0);
 
-  const rotateLeftButton = document.getElementById('rotate-left');
-  const rotateRightButton = document.getElementById('rotate-right');
+  // const rotateLeftButton = document.getElementById('rotate-left');
+  // const rotateRightButton = document.getElementById('rotate-right');
 
-  rotateLeftButton.addEventListener('click', rotateCameraLeft);
-  rotateRightButton.addEventListener('click', rotateCameraRight);
+  // rotateLeftButton.addEventListener('click', rotateCameraLeft);
+  // rotateRightButton.addEventListener('click', rotateCameraRight);
 
-  const rotationAmount = 10; // Adjust the rotation as needed
+  // const rotationAmount = 10; // Adjust the rotation as needed
 
-  function rotateCameraLeft() {
-    camera.rotation.y += rotationAmount;
-    animate();
-    console.log(controls.object.rotation);
-  }
+  // function rotateCameraLeft() {
+  //   camera.rotation.y += rotationAmount;
+  //   animate();
+  //   console.log(controls.object.rotation);
+  // }
 
-  function rotateCameraRight() {
-    camera.rotation.y -= rotationAmount;
-    animate();
-    console.log(controls.object.rotation);
-  }
+  // function rotateCameraRight() {
+  //   camera.rotation.y -= rotationAmount;
+  //   animate();
+  //   console.log(controls.object.rotation);
+  // }
 });

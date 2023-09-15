@@ -6,16 +6,30 @@
     <title>Skybox with Three.js</title>
 </head>
 <body>
-    <div id="scene-container"></div>
+    <div class="container">
+        <div id="scene-container"></div>
+    </div>
+    <div class="content">
+        <h1 class="header-text">You must first fail to reach your ultimate goal</h1>
+        <a href="#aboutthiswebsite" class="link" id="link1">About this website</a>
+        <a href="link" class="link" id="link2">This is an other link</a>
+
+        <!-- <button id="rotate-left" class="arrow-button"></button>
+        <button id="rotate-right" class="arrow-button"></button> -->
+
+    </div>
+    <div id="aboutthiswebsite" class="content">
+        <h2>This page is created by using an AI skybox tool by Blockade Labs,<br>
+            Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.</h2>
+
+
+    </div>
     <script src="skybox.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <!-- <script src="https://threejs.org/examples/jsm/loaders/FBXLoader.js"></script> -->
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/xolonium" type="text/css"/>
 
-    <div>
-        <button id="rotate-left" class="arrow-button"></button>
-        <button id="rotate-right" class="arrow-button"></button> 
-    </div>
 </body>
 </html>

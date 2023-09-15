@@ -1,4 +1,29 @@
 
+#scene-container {
+    position: relative; /* Create a positioning context for child elements */
+}
+
+.link {
+    z-index: 1; /* Place the text above the background */
+    position: absolute;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+#link1 {
+    bottom: 30px;
+    left: 100px;
+
+}
+.link:hover {
+    /* background-color: #007bff; */
+    color: #fff;
+}
+
+#link2 {
+    bottom: 10px;
+    left: 100px;
+}
 .arrow-button {
     width: 100px;
     height: 100px;
@@ -9,25 +34,46 @@
     position: absolute;
     border: none;
     padding: 0;
+    font: inherit;
   }
-  #rotate-right{
+  #rotate-right {
     bottom: 10px;
     right: 10px;
     transform: scaleX(-1);
+    
   }
-  #rotate-left{
+  #rotate-left {
     bottom: 10px;
     left: 10px;
   }
 
-/* #rotate-right {
-    border-width: 0 3px 3px 0;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
+  .content {
+    font-family: 'XoloniumRegular';
+    font-weight: normal;
+    font-style: normal;
+    color: rgb(103, 248, 233);
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 6px #f200ff, 0 0 7px #0000FF;
+
+ }
+
+/* Style for the header text */
+.header-text {
+    position: absolute; /* Position the text element */
+    top: 10%; /* Adjust to vertically center the text */
+    left: 50%; /* Adjust to horizontally center the text */
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    z-index: 0; /* Place the text above the background */
+    font-size: 2rem; /* Adjust font size as needed */
+    text-align: center; /* Center-align the text */
 }
 
-#rotate-left {
-    border-width: 0 3px 3px 0;
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-} */
+#aboutthiswebsite {
+    position: absolute; /* Position the text element */
+    top: 50%; /* Adjust to vertically center the text */
+    left: 50%; /* Adjust to horizontally center the text */
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    z-index: 0; /* Place the text above the background */
+    text-align: center; /* Center-align the text */
+}
