@@ -47,6 +47,12 @@ html, body {
     bottom: 10px;
     left: 100px;
 }
+
+#link3 {
+    bottom: 30px;
+    left: 100px;
+}
+
 #toggle_full_screen{
     cursor: pointer;
     position: absolute; /* Position the text element */
@@ -59,20 +65,7 @@ html, body {
 .toggle_full_screen:hover{
     color: #fff;
 }
-.arrow-button {
-    width: 100px;
-    height: 100px;
-    background-image: url('./neonarrow.png');
-    border: none;
-    padding: 0;
-    background-size:contain;
-    position: absolute;
-    border: none;
-    padding: 0;
-    font: inherit;
-  }
-
-  .content {
+.content {
     font-family: 'XoloniumRegular';
     font-weight: normal;
     font-style: normal;
