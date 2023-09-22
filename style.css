@@ -33,23 +33,36 @@ html, body {
     color: inherit;
 }
 
+.currentpage {
+    z-index: 1; /* Place the text above the background */
+    position: absolute;
+    font-family: 'XoloniumRegular';
+    font-weight: normal;
+    font-style: normal;
+    /* color: rgb(103, 248, 233); */
+    /* font-weight: bold; */
+    text-align: center;
+    text-shadow: 0 0 6px #ea76f0, 0 0 7px #7e7efa;
+    color: gray;
+}
+
 .link:hover {
     /* background-color: #007bff; */
     color: #fff;
 }
 
 #link1 {
-    bottom: 30px;
-    left: 100px;
-}
-
-#link2 {
     bottom: 10px;
     left: 100px;
 }
 
-#link3 {
+#link2 {
     bottom: 30px;
+    left: 100px;
+}
+
+#link3 {
+    bottom: 50px;
     left: 100px;
 }
 
