@@ -31,6 +31,7 @@ html, body {
     position: absolute;
     text-decoration: inherit;
     color: inherit;
+    cursor: pointer;
 }
 
 .currentpage {
@@ -107,6 +108,7 @@ html, body {
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 0; /* Place the text above the background */
     text-align: center; /* Center-align the text */
+    font-size: 2rem; /* Adjust font size as needed */
 }
 
 /* ---------------------------WARP----------------------- */
