@@ -1,17 +1,29 @@
 
+
+
+import * as THREE from '../three.module.js';
+import CameraControls from '../camera-controls.module.js';
+
+
 document.addEventListener('DOMContentLoaded', function () {
-  // Create a scene
-  const scene = new THREE.Scene();
-  // Create a camera
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  
+  CameraControls.install( { THREE: THREE } );
+  
+  // snip ( init three scene... )
+  let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 0.001; // Adjust the camera position as needed
-  // Create a renderer
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  sceneContainer = document.getElementById('scene_container').appendChild(renderer.domElement);
+  const cameraControls = new CameraControls( camera, renderer.domElement );
+  // const cControls = CameraControls.install( { THREE: THREE } );
+  // cControls = new CameraControls(camera, renderer.domElement);
+  // Create a scene
+  const scene = new THREE.Scene();
+  const clock = new THREE.Clock();
+  document.getElementById('scene_container').appendChild(renderer.domElement);
   // sceneContainer.style.display = 'block'; // Show the content
-  let controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false;
+  // const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  // controls.enableZoom = false;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
   const skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
@@ -50,13 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
   let cameraRotationX = camera.rotation.x;
   let cameraRotationY = camera.rotation.y;
   let cameraRotationZ = camera.rotation.z;
-  let newCameraRotationX;
-  let newCameraRotationY;
-  let newCameraRotationZ;
+  let newCameraRotationX = cameraRotationX;
+  let newCameraRotationY = cameraRotationY;
+  let newCameraRotationZ = cameraRotationZ;
 
   //Add realism with damping, no abrupt stops
-  controls.enableDamping = true;
-
+  // controls.enableDamping = true;
+  let enableTransition = cameraControls.enableTransition = true;
   function hoveringanimation() {
     requestAnimationFrame(hoveringanimation);
     
@@ -82,14 +94,24 @@ document.addEventListener('DOMContentLoaded', function () {
   
   // Animation loop orbit controls
   function animate() {
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-    // Update animations, positions, or other logic here
     // controls.update();
+
+    // update the time
+    const delta = clock.getDelta();
+    const hasControlsUpdated = cameraControls.update(delta);
+    
+    requestAnimationFrame(animate);    
+    // renderer.render( scene, camera );
+    if ( hasControlsUpdated ) {
+
+      renderer.render( scene, camera );
+
+    }
   };
+  
       
   animate();
-
+  
   // window.addEventListener("keydown", function (event) {  
   //     if (event.key !== undefined) {
   //       // Handle the event with KeyboardEvent.key
@@ -114,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(camera.rotation);
       }
     }
-});
+  });
 
   const contentContainer = document.getElementById('changing_content');
 
@@ -141,9 +163,9 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link2">Travel to Gallery</a>
     <a class="currentpage" id="link1">About this website</a>
   `;
-
+  // cameraControls.fitToSphere(skySphere, enableTransition);
   contentContainer.innerHTML = startContent;
-
+  let currentCameraRotation;
   //Click events for buttons/links
   contentContainer.addEventListener('click', (event) => {
     // Check if the clicked element has a specific ID
@@ -154,15 +176,16 @@ document.addEventListener('DOMContentLoaded', function () {
         contentContainer.innerHTML = aboutContent;
         break;
       case 'link2':
+        cameraControls.setLookAt( 0, 0, camera.position.z, 0, -0.1, 0.3, enableTransition )
         // warp();
-        camera.rotation.set(-2.606, -0.7, -2.774);
+        // enableDamping = false;
         newCameraRotationX = camera.rotation.x;
         newCameraRotationY = camera.rotation.y;
         newCameraRotationZ = camera.rotation.z;
         contentContainer.innerHTML = galleryContent;
         break;
       case 'link3':
-        camera.rotation.set(cameraRotationX, cameraRotationY, cameraRotationZ);
+        cameraControls.setLookAt( 0, 0, camera.position.z, cameraRotationX, cameraRotationY, cameraRotationZ, enableTransition )
         newCameraRotationX = camera.rotation.x;
         newCameraRotationY = camera.rotation.y;
         newCameraRotationZ = camera.rotation.z;
@@ -180,11 +203,16 @@ document.addEventListener('DOMContentLoaded', function () {
         `
         break;
     }
-    camera.rotation.set(newCameraRotationX, newCameraRotationY, newCameraRotationZ);
-    console.log("newCameraRotation" + newCameraRotationX + ", " + newCameraRotationY + ", " + newCameraRotationZ);
-    console.log("controls target " + controls.target.position);
+    if (targetId !== 'link1') {
+
+      camera.rotation.set(newCameraRotationX, newCameraRotationY, newCameraRotationZ);
+    }
+    // currentCameraRotation = camera.rotation;
+    console.log("newCameraRotation " + newCameraRotationX + ", " + newCameraRotationY + ", " + newCameraRotationZ);
+    // console.log("controls target " + controls.target.position);
 
     contentContainer.innerHTML;
+
     // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
     const fullScreenButtonNew = document.getElementById('toggle_full_screen');
     if (fullScreenButtonNew) {
