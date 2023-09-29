@@ -161,16 +161,11 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link2">Travel to Gallery</a>
     <a class="currentpage" id="link1">About this website</a>
   `;
-  // cameraControls.fitToSphere(skySphere, enableTransition);
+
   contentContainer.innerHTML = startContent;
-  // Camera rotation values for click event listener
-  // let cameraRotationX = camera.rotation.x;
-  // let cameraRotationY = camera.rotation.y;
-  // let cameraRotationZ = camera.rotation.z;
-  // let newCameraRotationX;
-  // let newCameraRotationY;
-  // let newCameraRotationZ;
+
   let warpInProcess;
+
   //Click events for buttons/links
   contentContainer.addEventListener('click', (event) => {
     // Check if the clicked element has a specific ID
@@ -181,35 +176,12 @@ document.addEventListener('DOMContentLoaded', function () {
         contentContainer.innerHTML = aboutContent;
         break;
       case 'link2':
-        cameraControls.setLookAt( 0, 0, camera.position.z, 0, -0.1, 0.3, enableTransition )
-        // enableDamping = false;
-        const processState = 
-        // switch (processState)
-        warpInProcess = true;
-        console.log('switch case: warpInProcess:', warpInProcess);
-        if (warpInProcess) {
-          warp();
-          contentContainer.innerHTML = galleryContent;
-        }
-        else {
-        }
-        // setTimeout(() => {
-        //   warpInProcess = false;
-        //   console.log("setTimeout, warp in process " + warpInProcess);
-        //   return
-        // }, 3000); // this is the time you want to run the warp
-        contentContainer.innerHTML = galleryContent;
-        
-        // newCameraRotationX = camera.rotation.x;
-        // newCameraRotationY = camera.rotation.y;
-        // newCameraRotationZ = camera.rotation.z;
+        handleGalleryContent();        
         break;
       case 'link3':
         cameraControls.setLookAt( 0, 0, camera.position.z, 0, 0, 0, enableTransition )
         contentContainer.innerHTML = startContent;
-        // newCameraRotationX = camera.rotation.x;
-        // newCameraRotationY = camera.rotation.y;
-        // newCameraRotationZ = camera.rotation.z;
+
         break;
       case 'toggle_full_screen':
         break;
@@ -224,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
     contentContainer.innerHTML;
+    console.log("content " + contentContainer.innerHTML);
     animate();
 
     // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
@@ -271,6 +244,43 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
+  function handleGalleryContent() {
+    warpInProcess = true;
+    if (warpInProcess) {
+      // Wrap the entire sequence of animations in a Promise
+      const animationPromise = new Promise(async (resolve) => {
+        // Perform the complex transition
+        cameraControls.smoothTime = 0.25;
+        await cameraControls.rotateTo(Math.PI / -2.7, Math.PI / 1.5, true);
+
+        // Start the warp animation and zoom simultaneously
+        const warpPromise = new Promise((warpResolve) => {
+          warp(() => {
+            warpResolve(); // Resolve the Promise when the warp animation ends
+          });
+        });
+        
+        const zoomPromise = new Promise((zoomResolve) => {
+          cameraControls.zoom(camera.zoom / 0.01, true, () => {
+            zoomResolve(); // Resolve the Promise when the zoom animation ends
+          });
+        });
+
+        // Wait for both warp and zoom animations to complete
+        await Promise.all([warpPromise, zoomPromise]);
+
+        resolve(); // Resolve the main animation Promise
+
+      });
+
+      // After both complex transition and warp animation are complete, load the gallery content
+      animationPromise.then(() => {
+        contentContainer.innerHTML = galleryContent;
+      });
+    } else {
+      contentContainer.innerHTML = galleryContent;
+    }
+  }
 
   //-----------------------------WARP----------------------------
 
@@ -289,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var backgroundColor = { r:0, g:0, b:0, a:0 };
 
   var colorInvertValue = 0;
-  function warp(callback) {
+  function warp() {
     if (!warpInProcess) {
       console.log("warp has ended");
       return
@@ -563,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function () {
               starSpeed = starSpeedMin + (2 * (starSpeedMax - starSpeedMin) * (elapsedTime / (animationDuration / 2)));
             } else {
               // Decelerate during the second half of the animation
-              starSpeed = starSpeedMax - (2 * (starSpeedMax - starSpeedMin) * ((elapsedTime - animationDuration / 2) / (animationDuration / 2)));
+              starSpeed = starSpeedMax - (2 * (starSpeedMax - starSpeedMin) * ((elapsedTime - animationDuration) / (animationDuration / 2)));
             }
 
               if (elapsedTime > animationDuration) {
@@ -574,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function () {
               }
               else {
                 contentContainer.innerHTML = `
-                <h1 class="header-text" id="header-text">OOOOOOPS</h1>
+                <h1 class="header-text" id="header-text">WARP MODE</h1>
                 `;
                 requestAnimationFrame(animate);
               }
@@ -587,21 +597,21 @@ document.addEventListener('DOMContentLoaded', function () {
             warpInProcess = false;
             //---
 
-          if ( !mouseActive ) {
+          // if ( !mouseActive ) {
 
-            fov += 0.5;
+          //   fov += 0.5;
 
-            if ( fov > fovMax )
-              fov = fovMax;
+          //   if ( fov > fovMax )
+          //     fov = fovMax;
 
-          } else {
+          // } else {
 
-            fov -= 1;
+          //   fov -= 1;
 
-            if ( fov < fovMin )
-              fov = fovMin;
+          //   if ( fov < fovMin )
+          //     fov = fovMin;
 
-          }
+          // }
 
           //---
 
