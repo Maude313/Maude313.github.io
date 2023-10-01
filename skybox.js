@@ -9,28 +9,23 @@ document.addEventListener('DOMContentLoaded', function () {
   
   CameraControls.install( { THREE: THREE } );
   
-  // snip ( init three scene... )
-  let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 0.001; // Adjust the camera position as needed
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   const pixelRatio = window.devicePixelRatio || 1; // Use 1 as the default for standard displays
   renderer.setPixelRatio(pixelRatio);
-  
   const cameraControls = new CameraControls( camera, renderer.domElement );
-  // const cControls = CameraControls.install( { THREE: THREE } );
-  // cControls = new CameraControls(camera, renderer.domElement);
   // Create a scene
   const scene = new THREE.Scene();
   const clock = new THREE.Clock();
   document.getElementById('scene_container').appendChild(renderer.domElement);
-  // sceneContainer.style.display = 'block'; // Show the content
   // const controls = new THREE.OrbitControls(camera, renderer.domElement);
   // controls.enableZoom = false;
   cameraControls.enableZoom = false;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
-  const skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
+  let skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
   const sphereGeometry = new THREE.SphereGeometry(1, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
@@ -45,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(1, 1, 1);
   scene.add(directionalLight);
+
+  const contentContainer = document.getElementById('changing-content');
 
   // Handle window resize
   window.addEventListener('resize', () => {
@@ -62,10 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let changeDirectionIntervalX = 9000; // Interval to change direction (in milliseconds)
   let lastDirectionChange = performance.now();
 
-
-
-  //Add realism with damping, no abrupt stops
-  // controls.enableDamping = true;
   let enableTransition = cameraControls.enableTransition = true;
   function hoveringanimation() {
     requestAnimationFrame(hoveringanimation);
@@ -107,37 +100,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
   
-      
-
-  
-  // window.addEventListener("keydown", function (event) {  
-  //     if (event.key !== undefined) {
-  //       // Handle the event with KeyboardEvent.key
-  //       if (event.key === "w") {
-  //         camera.rotation.y += .05;
-  //       } else if (event.key === "s") {
-  //         camera.rotation.y -= .05;
-  //       }
-  //     }
-  // });
-
-    
-  window.addEventListener("keydown", function (event) {  
+  // Debug event listener
+  window.addEventListener("keydown", function (event) {
     if (event.key !== undefined) {
-      // Handle the event with KeyboardEvent.key
-      if (event.key === "p") {
-        console.log("position");
-        console.log(camera.position);
-
-      } else if (event.key === "r") {
-        console.log("rotation");
-        console.log(camera.rotation);
+      switch (event.key) {
+        case "p":
+          console.log("position");
+          console.log(camera.position);
+          break;
+        case "r":
+          console.log("rotation");
+          console.log(camera.rotation);
+          break;
+          case "i":
+          console.log("skyTexture");
+          console.log('Current image:', skyTexture);
+          break;
+          case "m":
+          console.log("skySphere.material");
+          console.log('skySphere material:', skySphere.material);
+          break;
       }
     }
   });
 
-  const contentContainer = document.getElementById('changing_content');
-
+// InnerHTML content to upload without loading new page
   const startContent = `
     <h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
     <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
@@ -163,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
 
   contentContainer.innerHTML = startContent;
-
+  let currentContent;
   let warpInProcess;
 
   //Click events for buttons/links
@@ -173,15 +160,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     switch (targetId) {
       case 'link1':
+        event.preventDefault();
         contentContainer.innerHTML = aboutContent;
         break;
       case 'link2':
-        handleGalleryContent();        
+        if (currentContent !== galleryContent) {
+          warpInProcess = true;
+          handleWarp();
+          currentContent = galleryContent;       
+        }
+        else if (contentContainer.innerHTML === aboutContent) {
+          contentContainer.innerHTML = galleryContent;
+          currentContent = galleryContent;       
+        }
         break;
       case 'link3':
-        cameraControls.setLookAt( 0, 0, camera.position.z, 0, 0, 0, enableTransition )
-        contentContainer.innerHTML = startContent;
-
+        if (currentContent === galleryContent) {
+          // Reload the page
+          location.reload();
+        }
+        else {
+          cameraControls.setLookAt( 0, 0, camera.position.z, 0, 0, 0, enableTransition )
+          contentContainer.innerHTML = startContent;
+        }
+        currentContent = startContent;
         break;
       case 'toggle_full_screen':
         break;
@@ -195,7 +197,6 @@ document.addEventListener('DOMContentLoaded', function () {
         `
         break;
     }
-    contentContainer.innerHTML;
     console.log("content " + contentContainer.innerHTML);
     animate();
 
@@ -244,13 +245,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  function handleGalleryContent() {
-    warpInProcess = true;
+  function handleWarp() {
     if (warpInProcess) {
       // Wrap the entire sequence of animations in a Promise
       const animationPromise = new Promise(async (resolve) => {
         // Perform the complex transition
-        cameraControls.smoothTime = 0.25;
+        cameraControls.smoothTime = 0.4;
         await cameraControls.rotateTo(Math.PI / -2.7, Math.PI / 1.5, true);
 
         // Start the warp animation and zoom simultaneously
@@ -261,29 +261,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         
         const zoomPromise = new Promise((zoomResolve) => {
+          cameraControls.smoothTime = 1;
           cameraControls.zoom(camera.zoom / 0.01, true, () => {
             zoomResolve(); // Resolve the Promise when the zoom animation ends
           });
         });
-
+        
         // Wait for both warp and zoom animations to complete
         await Promise.all([warpPromise, zoomPromise]);
-
+        
         resolve(); // Resolve the main animation Promise
-
+        
       });
-
+      
       // After both complex transition and warp animation are complete, load the gallery content
       animationPromise.then(() => {
         contentContainer.innerHTML = galleryContent;
+        skyTexture = textureLoader.load('sky3.jpg');
       });
     } else {
       contentContainer.innerHTML = galleryContent;
+      skyTexture = textureLoader.load('sky4.jpg');
     }
   }
 
-  //-----------------------------WARP----------------------------
+  function loadGalleryContent() {
+    contentContainer.innerHTML = galleryContent;
+    changeBackgroundImage('sky3.jpg');
 
+    cameraControls.zoom(1, false);
+    cameraControls.reset();
+  }
+    // Function to change the background image
+  function changeBackgroundImage(imageUrl) {
+    // Load the new texture
+    const newSkyTexture = textureLoader.load(imageUrl);
+
+    // Update the material's map property
+    sphereMaterial.map = newSkyTexture;
+    sphereMaterial.needsUpdate = true;
+
+    // Remove the old texture from memory (optional)
+    skyTexture.dispose();
+
+    // Update the skyTexture reference
+    skyTexture = newSkyTexture;
+  }
+
+  //-----------------------------WARP----------------------------
+ // Code for warp drive is copied and modified, original: https://codepen.io/NiklasKnaack/pen/OmwgKb
 
 
 
@@ -546,11 +572,11 @@ document.addEventListener('DOMContentLoaded', function () {
           var star;
           var scale;
 
+          //Here's some of my modifications to animate the warp to fit my purpose
 
           // Get the animation start time
           var animationStartTime = null;
-          
-          // starSpeed = 20; // Start with the minimum speed
+
           function animate() {
             // Define your starSpeed parameters
             console.log("starspeed: " + starSpeed);
@@ -561,32 +587,31 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!animationStartTime) {
               animationStartTime = Date.now();
             }
-            // warpInProcess = true;
             
             // Calculate the elapsed time
             var elapsedTime = Date.now() - animationStartTime;
-            
             
             // Update starSpeed based on the elapsed time
             if (elapsedTime < animationDuration / 2) {
               // Accelerate during the first half of the animation
               starSpeed = starSpeedMin + (2 * (starSpeedMax - starSpeedMin) * (elapsedTime / (animationDuration / 2)));
-            } else {
-              // Decelerate during the second half of the animation
-              starSpeed = starSpeedMax - (2 * (starSpeedMax - starSpeedMin) * ((elapsedTime - animationDuration) / (animationDuration / 2)));
-            }
+              } else {
+                // Decelerate during the second half of the animation
+                starSpeed = starSpeedMax - (2 * (starSpeedMax - starSpeedMin) * ((elapsedTime - animationDuration) / (animationDuration / 2)));
+              }
 
-              if (elapsedTime > animationDuration) {
+              if (elapsedTime < animationDuration){
+                contentContainer.innerHTML = `
+                <h1 class="header-text" id="header-text">WARP DRIVE</h1>
+                `;
+                requestAnimationFrame(animate);
+              }
+              else {
                 canvas.remove();
                 console.log("canvas removed");
                 warpInProcess = false;
+                loadGalleryContent();
                 return
-              }
-              else {
-                contentContainer.innerHTML = `
-                <h1 class="header-text" id="header-text">WARP MODE</h1>
-                `;
-                requestAnimationFrame(animate);
               }
               return
             }
@@ -596,6 +621,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             warpInProcess = false;
             //---
+
+            //End of my part
 
           // if ( !mouseActive ) {
 
@@ -758,457 +785,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  //-----------------------------end--------------------------------
-
-//   function warp() {
-
-//     $( document ).ready( function() {
-
-//       var isMobile = false;
-    
-//       //---
-    
-//       if ( isMobile.phone || isMobile.tablet ) {
-          
-//         isMobile = true;
-          
-//       }
-      
-//       //---
-
-//       var canvasWidth = window.innerWidth;
-//       var canvasHeight = window.innerHeight;
-    
-//       //---Create a canvas
-    
-//       var canvas = document.createElement( 'canvas' );
-//       canvas.setAttribute( 'width', canvasWidth );
-//       canvas.setAttribute( 'height', canvasHeight );
-//       canvas.oncontextmenu = function( e ) {
-//         e.preventDefault();
-//       };
-        
-//       document.getElementById( 'effect' ).appendChild( canvas );
-
-//       //---
-//       // const img = new Image();
-    
-//       var ctx = canvas.getContext( '2d' );
-//       var imageData = ctx.getImageData( 0, 0, canvasWidth, canvasHeight );
-//       var pix = imageData.data;
-//       // const dataURL = canvas.toDataURL("image/png"); // You can change the format to "image/jpeg" if needed
-//       // img.src = dataURL;
-//       // // Store in local storage
-//       // localStorage.setItem("savedImage", dataURL);
-//       // const savedImageDataURL = localStorage.getItem("savedImage");
-
-//       // img.src = savedImageDataURL;
-//       // document.body.appendChild(img); // Add it to the HTML document
-
-//           // const base64image = skySphere.toDataURL("image/png");
-//           // window.location.href = base64image;
-//           // const warpImage = textureLoader.load('image.png');
-//           // scene.add(warpImage);
-//           // // Create a temporary <a> element
-//           // const downloadLink = document.createElement("a");
-//           // downloadLink.href = base64image;
-//           // downloadLink.download = "screenshot.png"; // Set the desired file name here
-
-
-      
-
-//       // backgroundImage.src = 'image.png'; // Replace with the URL of your background image
-//       //---
-    
-//       var MATHPI180 = Math.PI / 180;
-//       var MATHPI2 = Math.PI * 2;
-    
-//       var center = { x:canvas.width / 2, y:canvas.height / 2 };
-    
-//       //---
-    
-//       var mouseActive = false;
-//       var mouseDown = false;
-//       var mousePos = { x:center.x, y:center.y };
-    
-//       //---
-    
-//       var rotationSpeed = -1.00;
-//       var rotationSpeedFactor = { x: 0, y: 0 };
-//       rotationSpeedFactor.x = rotationSpeed / center.x;
-//       rotationSpeedFactor.y = rotationSpeed / center.y;
-    
-//       var fov = 300;
-//       var fovMin = 210;
-//       var fovMax = fov;
-    
-//       var starHolderCount = 6666;
-//       var starHolder = [];
-//       var starBgHolder = [];
-//       var starSpeed = 2;
-//       var starSpeedMin = starSpeed;
-//       var starSpeedMax = 200;
-//       var starDistance = 8000;
-//       var starRotation = 0;
-    
-//       var backgroundColor = { r:0, g:0, b:0, a:0 };
-    
-//       var colorInvertValue = 0;
-    
-//       //---
-    
-//       function clearImageData() {
-    
-//         for ( var i = 0, l = pix.length; i < l; i += 4 ) {
-    
-//           pix[ i ] = backgroundColor.r;
-//           pix[ i + 1 ] = backgroundColor.g;
-//           pix[ i + 2 ] = backgroundColor.b;
-//           pix[ i + 3 ] = backgroundColor.a;
-    
-//         }
-    
-//       };
-    
-//       function setPixel( x, y, r, g, b, a ) {
-    
-//         var i = ( x + y * canvasWidth ) * 4;
-    
-//         pix[ i ] = r;
-//         pix[ i + 1 ] = g;
-//         pix[ i + 2 ] = b;
-//         pix[ i + 3 ] = a;
-    
-//       };
-    
-//       function setPixelAdditive( x, y, r, g, b, a ) {
-    
-//         var i = ( x + y * canvasWidth ) * 4;
-    
-//         pix[ i ]     = pix[ i ] + r;
-//         pix[ i + 1 ] = pix[ i + 1 ] + g;
-//         pix[ i + 2 ] = pix[ i + 2 ] + b;
-//         pix[ i + 3 ] = a;
-    
-//       };
-    
-//       //---
-      
-//       function drawLine( x1, y1, x2, y2, r, g, b, a ) {
-    
-//         var dx = Math.abs( x2 - x1 );
-//         var dy = Math.abs( y2 - y1 );
-    
-//         var sx = ( x1 < x2 ) ? 1 : -1;
-//         var sy = ( y1 < y2 ) ? 1 : -1;
-    
-//         var err = dx - dy;
-    
-//         var lx = x1;
-//         var ly = y1;    
-    
-//         while ( true ) {
-    
-//           if ( lx > 0 && lx < canvasWidth && ly > 0 && ly < canvasHeight ) {
-    
-//             setPixel( lx, ly, r, g, b, a );
-    
-//           }
-    
-//           if ( ( lx === x2 ) && ( ly === y2 ) )
-//             break;
-    
-//           var e2 = 2 * err;
-    
-//           if ( e2 > -dx ) { 
-    
-//             err -= dy; 
-//             lx += sx; 
-    
-//           }
-    
-//           if ( e2 < dy ) { 
-    
-//             err += dx; 
-//             ly += sy; 
-    
-//           }
-    
-//         }
-    
-//       };
-    
-//       //---
-    
-//       function addParticle( x, y, z, ox, oy, oz ) {
-    
-//         var particle = {};
-//         particle.x = x;
-//         particle.y = y;
-//         particle.z = z;
-//         particle.ox = ox;
-//         particle.oy = oy;
-//         particle.x2d = 0;
-//         particle.y2d = 0;
-    
-//         return particle;
-    
-//       };
-    
-//       function addParticles() {
-    
-//         var i;
-    
-//         var x, y, z;
-    
-//         var colorValue;
-//         var particle;
-    
-//         for ( i = 0; i < starHolderCount / 3; i++ ) {
-    
-//           x = Math.random() * 24000 - 12000;
-//           y = Math.random() * 4500 - 2250;
-//           z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
-    
-//           colorValue = Math.floor( Math.random() * 55 ) + 5;
-    
-//           particle = addParticle( x, y, z, x, y, z );
-//           particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
-    
-//           starBgHolder.push( particle );
-    
-//         }
-    
-//         for ( i = 0; i < starHolderCount; i++ ) {
-    
-//           x = Math.random() * 10000 - 5000;
-//           y = Math.random() * 10000 - 5000;
-//           z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
-    
-//           colorValue = Math.floor( Math.random() * 155 ) + 100;
-    
-//           particle = addParticle( x, y, z, x, y, z );
-//           particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
-//           particle.oColor = { r:colorValue, g:colorValue, b:colorValue, a:255 };
-//           particle.w = 1;
-//           particle.distance = starDistance - z;
-//           particle.distanceTotal = Math.round( starDistance + fov - particle.w );
-    
-//           starHolder.push( particle );
-    
-//         }
-    
-//       };
-    
-//       //---
-
-//       window.requestAnimFrame = ( function() {
-    
-//         return  window.requestAnimationFrame       ||
-//           window.webkitRequestAnimationFrame ||
-//           window.mozRequestAnimationFrame    ||
-//           function( callback ) {
-//           window.setTimeout( callback, 1000 / 60 );
-//         };
-    
-//       } )();
-    
-//       function animloop() {
-//         requestAnimFrame( animloop );
-//         render();
-//       };
-    
-//       function render() {
-//         // // Clear the 2D canvas
-//         // ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//         // // Draw the background image
-//         // ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
-//         // renderer.render(scene, camera);
-  
-//         clearImageData();
-
-//         //---
-    
-//         var i, j, l, k, m, n;
-    
-//         //---
-    
-//         var rx, rz;
-    
-//         var star;
-//         var scale;
-    
-//         //---
-        
-        
-  
-//         // var endWarpBool = false;
-//         // if (!endWarpBool) {
-//         //   warpStarted = true;
-//         //   starSpeed += 2;
-          
-//         //   setTimeout(endWarp, 3000);
-//         //   if (starSpeed > starSpeedMax) {
-//         //     starSpeed = starSpeedMax;
-//         //     console.log("maximum speed");
-//         //     endWarpBool = true;
-//         //     endWarp();
-
-//         //   }
-
-//         // }
-
-//         // function endWarp() {
-//         //   console.log("ended the warp");
-//         //   endWarpBool = true;
-//         //   starSpeed -= 1;
-    
-//         //   if (starSpeed < starSpeedMin)
-//         //     starSpeed = starSpeedMin;
-//         //     if (canvas) {
-//         //       canvas.remove();
-//         //       return;
-//         //     }       
-//         // }
-    
-//         if ( mouseActive ) {
-      
-//           starSpeed += 2;
-    
-//           if ( starSpeed > starSpeedMax )
-//             starSpeed = starSpeedMax;
-    
-//         } else {
-    
-//           starSpeed -= 1;
-    
-//           if ( starSpeed < starSpeedMin )
-//             starSpeed = starSpeedMin;
-    
-//         }
-    
-//         if ( !mouseActive ) {
-
-//           fov += 0.5;
-
-//           if ( fov > fovMax )
-//             fov = fovMax;
-
-//         } else {
-
-//           fov -= 1;
-
-//           if ( fov < fovMin )
-//             fov = fovMin;
-
-//         }
-//         var warpSpeedValue;
-    
-//         if ( isMobile ) {
-    
-//           warpSpeedValue = starSpeed * ( starSpeed / starSpeedMax );
-    
-//         } else {
-    
-//           warpSpeedValue = starSpeed * ( starSpeed / ( starSpeedMax / 2 ) );
-    
-//         }
-//       }
-//       //---
-  
-//       for ( i = 0, l = starBgHolder.length; i < l; i++ ) {
-  
-//         star = starBgHolder[ i ];
-  
-//         scale = fov / ( fov + star.z ); 
-  
-//         star.x2d = ( star.x * scale ) + center.x; 
-//         star.y2d = ( star.y * scale ) + center.y; 
-  
-//         if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
-  
-//           setPixel( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
-  
-//         }
-  
-  
-//       }
-    
-//         //---
-    
-//         for ( i = 0, l = starHolder.length; i < l; i++ ) {
-    
-//           star = starHolder[ i ];
-    
-//           star.z -= starSpeed;
-//           star.distance += starSpeed;
-    
-//           if ( star.z < -fov + star.w ) {
-    
-//             star.z = starDistance;
-//             star.distance = 0;
-    
-//           } 
-    
-//           //---
-//           //star color
-    
-//           var distancePercent = star.distance / star.distanceTotal;
-    
-//           star.color.r = Math.floor( star.oColor.r * distancePercent );
-//           star.color.g = Math.floor( star.oColor.g * distancePercent );
-//           star.color.b = Math.floor( star.oColor.b * distancePercent );
-    
-//           //---
-//           //star draw
-    
-//           scale = fov / ( fov + star.z ); 
-    
-//           star.x2d = ( star.x * scale ) + center.x; 
-//           star.y2d = ( star.y * scale ) + center.y; 
-    
-//           if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
-    
-//             setPixelAdditive( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
-    
-//           }
-    
-//           if ( starSpeed != starSpeedMin ) {
-    
-//             var nz = star.z + warpSpeedValue;
-    
-//             scale = fov / ( fov + nz ); 
-    
-//             var x2d = ( star.x * scale ) + center.x; 
-//             var y2d = ( star.y * scale ) + center.y; 
-    
-//             if ( x2d > 0 && x2d < canvasWidth && y2d > 0 && y2d < canvasHeight ) {
-    
-//               drawLine( star.x2d | 0, star.y2d | 0, x2d | 0, y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
-    
-//             }imageData
-    
-//           }
-
-//           //rotation
-//           var radians = MATHPI180 * starRotation;
-          
-//           var cos = Math.cos( radians );
-//           var sin = Math.sin( radians );
-          
-//           star.x = ( cos * ( star.ox - center.x ) ) + ( sin * ( star.oy - center.y ) ) + center.x,
-//           star.y = ( cos * ( star.oy - center.y ) ) - ( sin * ( star.ox - center.x ) ) + center.y;
-//         }
-
-      
-//         //---
-    
-//         ctx.putImageData( imageData, 0, 0 );
-      
-//         addParticles();
-
-//         animloop();
-
-//       });
+  //-----------------------------end of WARP--------------------------------
 

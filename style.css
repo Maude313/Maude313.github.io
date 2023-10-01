@@ -1,8 +1,12 @@
 
 #scene-container {
     position: absolute; /* Create a positioning context for child elements */
-}
 
+}
+#changing-content {
+    opacity: 1;
+    transition: opacity 2s ease-out;
+}
 /* Reset margin and padding for the entire page */
 html, body {
     margin: 0;
