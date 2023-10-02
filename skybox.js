@@ -9,13 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
   
   CameraControls.install( { THREE: THREE } );
   
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 2000);
   camera.position.z = 0.001; // Adjust the camera position as needed
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   const pixelRatio = window.devicePixelRatio || 1; // Use 1 as the default for standard displays
-  renderer.setPixelRatio(pixelRatio);
-  const cameraControls = new CameraControls( camera, renderer.domElement );
+  renderer.setPixelRatio(window.devicePixelRatio);
+  document.body.appendChild(renderer.domElement);
+  const cameraControls = new CameraControls(camera, renderer.domElement);
   // Create a scene
   const scene = new THREE.Scene();
   const clock = new THREE.Clock();
@@ -27,12 +28,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const textureLoader = new THREE.TextureLoader();
   let skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
-  const sphereGeometry = new THREE.SphereGeometry(1, 32, 32); // Adjust the sphere size and detail as needed
+  const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
   const sphereMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
+  // sphereMaterial.map.minFilter = THREE.LinearFilter;
   // Create the sky sphere
   const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   scene.add(skySphere);
+
   // Add lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
@@ -43,23 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const contentContainer = document.getElementById('changing-content');
 
-  // Handle window resize
-  window.addEventListener('resize', () => {
-  const newWidth = window.innerWidth;
-  const newHeight = window.innerHeight;
-
-  // Update camera aspect ratio and renderer size
-  camera.aspect = newWidth / newHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(newWidth, newHeight);
-  });
-
   //Rotate the sphere slightly continuously
   let rotationDirection = 1; // Initial rotation direction (1 for clockwise, -1 for counterclockwise)
   let changeDirectionIntervalX = 9000; // Interval to change direction (in milliseconds)
   let lastDirectionChange = performance.now();
 
   let enableTransition = cameraControls.enableTransition = true;
+  
   function hoveringanimation() {
     requestAnimationFrame(hoveringanimation);
     
@@ -83,10 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   hoveringanimation();
   
-  // Animation loop orbit controls
+  // Animation loop camera controls
   function animate() {
-    // controls.update();
-
     // update the time
     const delta = clock.getDelta();
     const hasControlsUpdated = cameraControls.update(delta);
@@ -94,13 +85,52 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(animate);    
     // renderer.render( scene, camera );
     if ( hasControlsUpdated ) {
-
       renderer.render( scene, camera );
-
     }
   };
   
-  // Debug event listener
+  animate();
+
+  function adjustBrightnessAndContrast(color, brightness, contrast) {
+    // Ensure brightness and contrast are within valid ranges
+    brightness = Math.max(-1, Math.min(1, brightness)); // Range: [-1, 1]
+    contrast = Math.max(0, contrast); // Range: [0, ∞)
+
+    // Adjust brightness
+    color.r += brightness;
+    color.g += brightness;
+    color.b += brightness;
+
+    // Adjust contrast
+    const midpoint = 0.5; // Midpoint gray (range: [0, 1])
+    color.r = (color.r - midpoint) * contrast + midpoint;
+    color.g = (color.g - midpoint) * contrast + midpoint;
+    color.b = (color.b - midpoint) * contrast + midpoint;
+
+    // Clamp RGB components to the valid range [0, 1]
+    color.r = Math.min(1, Math.max(0, color.r));
+    color.g = Math.min(1, Math.max(0, color.g));
+    color.b = Math.min(1, Math.max(0, color.b));
+
+    return color;
+  }
+  const originalEmissiveColor = new THREE.Color(0xff0000);
+
+  // Adjusted emissive color with increased brightness and contrast
+  const adjustedEmissiveColor = adjustBrightnessAndContrast(originalEmissiveColor, 0.2, 1.5);
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+  
+    // Update camera aspect ratio and renderer size
+    camera.aspect = newWidth / newHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(newWidth, newHeight);
+    });
+
+  // Debug event listeners
   window.addEventListener("keydown", function (event) {
     if (event.key !== undefined) {
       switch (event.key) {
@@ -112,13 +142,17 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log("rotation");
           console.log(camera.rotation);
           break;
-          case "i":
+        case "i":
           console.log("skyTexture");
           console.log('Current image:', skyTexture);
           break;
-          case "m":
+        case "m":
           console.log("skySphere.material");
           console.log('skySphere material:', skySphere.material);
+          break;
+        case "w":
+          console.log("WARP in process ");
+          console.log(warpInProcess);
           break;
       }
     }
@@ -128,9 +162,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const startContent = `
     <h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
     <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+    <h2 id="aboutthiswebsite">This interstellar spacecraft is under construction<br><br>Come back later</h2>
     <a class="currentpage" id="link3">Back to start</a>
     <a class="link" id="link2">Travel to Gallery</a>
     <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
   `;
   const galleryContent = `
     <h1 class="header-text" id="header-text">Gallery</h1>
@@ -138,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="currentpage" id="link2">Travel to Gallery</a>
     <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
   `;
   const aboutContent = `
     <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
@@ -147,6 +184,22 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link2">Travel to Gallery</a>
     <a class="currentpage" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
+  `;
+  const portfolioContent = `
+    <h1 class="header-text" id="header-text">Portfolio</h1>
+    <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+    <h2 id="aboutthiswebsite">There will be content later</h2>
+    <a class="link" id="link3">Back to start</a>
+    <a class="link" id="link2">Travel to Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="currentpage" id="link4">Portfolio</a>
+  `;
+  const curriculumVitaeContent = `
+  
+  `;
+  const puzzleContent = `
+  
   `;
 
   contentContainer.innerHTML = startContent;
@@ -185,6 +238,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         currentContent = startContent;
         break;
+      case 'link4':
+        event.preventDefault();
+        contentContainer.innerHTML = portfolioContent;
+        break;
       case 'toggle_full_screen':
         break;
       case 'aboutthiswebsite':
@@ -198,7 +255,6 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
     console.log("content " + contentContainer.innerHTML);
-    animate();
 
     // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
     const fullScreenButtonNew = document.getElementById('toggle_full_screen');
@@ -208,9 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
   });
-
-
-
 
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
@@ -277,35 +330,67 @@ document.addEventListener('DOMContentLoaded', function () {
       // After both complex transition and warp animation are complete, load the gallery content
       animationPromise.then(() => {
         contentContainer.innerHTML = galleryContent;
-        skyTexture = textureLoader.load('sky3.jpg');
+        skyTexture = textureLoader.load('sky5.jpg');
       });
     } else {
       contentContainer.innerHTML = galleryContent;
-      skyTexture = textureLoader.load('sky4.jpg');
+      skyTexture = textureLoader.load('sky5.jpg');
     }
   }
 
   function loadGalleryContent() {
     contentContainer.innerHTML = galleryContent;
-    changeBackgroundImage('sky3.jpg');
+    changeBackgroundImage('sky5.jpg');
 
-    cameraControls.zoom(1, false);
+    // cameraControls.zoom(1, false);
     cameraControls.reset();
+
+    // Cylinder wall for the gallery
+    const cylinderGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2, 32, 32);
+    const cylinderMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1), // White color
+    side: THREE.DoubleSide, transparent: true, opacity: 0.3, // Set the opacity (0.0 to 1.0)
+    });
+    const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+    scene.add(cylinderMesh);
+    //Images
+    const imageLoader = new THREE.TextureLoader();
+    const texture1 = imageLoader.load('sky3.jpg');
+    const texture2 = imageLoader.load('sky5.jpg');
+
+    const planeGeometry1 = new THREE.PlaneGeometry(0.4, 0.3); // Image size
+    const planeGeometry2 = new THREE.PlaneGeometry(0.4, 0.3); // Image size
+    
+    const planeMaterial1 = new THREE.MeshBasicMaterial({ map: texture1 }); // Use the appropriate texture
+    const planeMaterial2 = new THREE.MeshBasicMaterial({ map: texture2 }); // Use the appropriate texture
+    const planeMesh1 = new THREE.Mesh(planeGeometry1, planeMaterial1);
+    const planeMesh2 = new THREE.Mesh(planeGeometry2, planeMaterial2);
+
+   // Position the planes (images) on the inner surface of the cylinder
+    planeMesh1.position.set(0, 0, 0.4); // Adjust x, y, and z coordinates
+    planeMesh2.position.set(planeGeometry1.x + 0.2, 0, 0); // Adjust x, y, and z coordinates
+    // Rotate the planes to face inward
+    planeMesh1.rotation.y = Math.PI;
+    planeMesh2.rotation.y = Math.PI;
+
+    // Add the planes (images) to the cylinder
+    cylinderMesh.add(planeMesh1);
+    cylinderMesh.add(planeMesh2);
   }
-    // Function to change the background image
+  // Function to change the background image
   function changeBackgroundImage(imageUrl) {
     // Load the new texture
     const newSkyTexture = textureLoader.load(imageUrl);
 
+    skyTexture = newSkyTexture;
     // Update the material's map property
-    sphereMaterial.map = newSkyTexture;
+    sphereMaterial.map = skyTexture;
     sphereMaterial.needsUpdate = true;
 
     // Remove the old texture from memory (optional)
     skyTexture.dispose();
 
     // Update the skyTexture reference
-    skyTexture = newSkyTexture;
+
   }
 
   //-----------------------------WARP----------------------------

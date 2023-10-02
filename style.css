@@ -67,6 +67,11 @@ html, body {
 }
 
 #link3 {
+    bottom: 70px;
+    left: 100px;
+}
+
+#link4 {
     bottom: 50px;
     left: 100px;
 }
