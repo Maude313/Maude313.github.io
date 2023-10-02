@@ -501,20 +501,20 @@ document.addEventListener('DOMContentLoaded', function () {
           var colorValue;
           var particle;
 
-          for ( i = 0; i < starHolderCount / 3; i++ ) {
+          // for ( i = 0; i < starHolderCount / 3; i++ ) {
 
-            x = Math.random() * 24000 - 12000;
-            y = Math.random() * 4500 - 2250;
-            z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
+          //   x = Math.random() * 24000 - 12000;
+          //   y = Math.random() * 4500 - 2250;
+          //   z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
 
-            colorValue = Math.floor( Math.random() * 55 ) + 5;
+          //   colorValue = Math.floor( Math.random() * 255 ) + 5;
 
-            particle = addParticle( x, y, z, x, y, z );
-            particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
+          //   particle = addParticle( x, y, z, x, y, z );
+          //   particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
 
-            starBgHolder.push( particle );
+          //   starBgHolder.push( particle );
 
-          }
+          // }
 
           for ( i = 0; i < starHolderCount; i++ ) {
 
@@ -522,11 +522,18 @@ document.addEventListener('DOMContentLoaded', function () {
             y = Math.random() * 10000 - 5000;
             z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
 
-            colorValue = Math.floor( Math.random() * 155 ) + 100;
+            // Define a color range that excludes black and gray (e.g., from light blue to white)
+            const minColorValue = 100; // Adjust this value to set the lower limit for colors
+            const maxColorValue = 255; // This is the upper limit for colors (white)
 
+            // colorValue = Math.floor( Math.random() * 155 ) + 100;
+            // For shades of blue, white, and turquoise
+            if (Math.random() < 0.2) { // Adjust the probability as needed
+              colorValue = Math.floor(Math.random() * (maxColorValue - minColorValue + 1)) + minColorValue;
+            }
             particle = addParticle( x, y, z, x, y, z );
-            particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
-            particle.oColor = { r:colorValue, g:colorValue, b:colorValue, a:255 };
+            particle.color = { r:colorValue, g:colorValue, b:colorValue, a:50 };
+            particle.oColor = { r:colorValue, g:colorValue, b:colorValue, a:50 };
             particle.w = 1;
             particle.distance = starDistance - z;
             particle.distanceTotal = Math.round( starDistance + fov - particle.w );
@@ -656,23 +663,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
           //---
 
-          for ( i = 0, l = starBgHolder.length; i < l; i++ ) {
+          // for ( i = 0, l = starBgHolder.length; i < l; i++ ) {
 
-            star = starBgHolder[ i ];
+          //   star = starBgHolder[ i ];
 
-            scale = fov / ( fov + star.z ); 
+          //   scale = fov / ( fov + star.z ); 
 
-            star.x2d = ( star.x * scale ) + center.x; 
-            star.y2d = ( star.y * scale ) + center.y; 
+          //   star.x2d = ( star.x * scale ) + center.x; 
+          //   star.y2d = ( star.y * scale ) + center.y; 
 
-            if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
+          //   if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
 
-              setPixel( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
+          //     setPixel( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
 
-            }
+          //   }
 
 
-          }
+          // }
 
           //---
 
@@ -709,7 +716,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
 
-              setPixelAdditive( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
+              setPixelAdditive( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 150 );
 
             }
 
@@ -724,24 +731,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
               if ( x2d > 0 && x2d < canvasWidth && y2d > 0 && y2d < canvasHeight ) {
 
-                drawLine( star.x2d | 0, star.y2d | 0, x2d | 0, y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
+                drawLine( star.x2d | 0, star.y2d | 0, x2d | 0, y2d | 0, star.color.r, star.color.g, star.color.b, 150 );
 
               }
 
             }
 
-            if ( mouseDown ) {
+            // if ( mouseDown ) {
 
-              //rotation
-              var radians = MATHPI180 * starRotation;
+            //   //rotation
+            //   var radians = MATHPI180 * starRotation;
 
-              var cos = Math.cos( radians );
-              var sin = Math.sin( radians );
+            //   var cos = Math.cos( radians );
+            //   var sin = Math.sin( radians );
 
-              star.x = ( cos * ( star.ox - center.x ) ) + ( sin * ( star.oy - center.y ) ) + center.x,
-                star.y = ( cos * ( star.oy - center.y ) ) - ( sin * ( star.ox - center.x ) ) + center.y;
+            //   star.x = ( cos * ( star.ox - center.x ) ) + ( sin * ( star.oy - center.y ) ) + center.x,
+            //     star.y = ( cos * ( star.oy - center.y ) ) - ( sin * ( star.ox - center.x ) ) + center.y;
 
-            }
+            // }
 
           }
 
@@ -751,23 +758,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
           //---
 
-          if ( mouseActive ) {
+          // if ( mouseActive ) {
 
-            center.x += ( mousePos.x - center.x ) * 0.015;
+          //   center.x += ( mousePos.x - center.x ) * 0.015;
 
-          } else {
+          // } else {
 
-            center.x += ( ( canvas.width / 2 ) - center.x ) * 0.015;
+          //   center.x += ( ( canvas.width / 2 ) - center.x ) * 0.015;
 
-          }
+          // }
 
-          //---
+          // //---
 
-          if ( mouseDown ) {
+          // if ( mouseDown ) {
 
-            starRotation -= 0.5;
+          //   starRotation -= 0.5;
 
-          }
+          // }
 
         };
 
