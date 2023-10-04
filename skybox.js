@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const textureLoader = new THREE.TextureLoader();
   let skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
-  const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32); // Adjust the sphere size and detail as needed
+  const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
   const sphereMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
   // sphereMaterial.map.minFilter = THREE.LinearFilter;
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
           handleWarp();
           currentContent = galleryContent;       
         }
-        else if (contentContainer.innerHTML === aboutContent) {
+        else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent) {
           contentContainer.innerHTML = galleryContent;
           currentContent = galleryContent;       
         }
@@ -345,37 +345,83 @@ document.addEventListener('DOMContentLoaded', function () {
     // cameraControls.zoom(1, false);
     cameraControls.reset();
 
+
     // Cylinder wall for the gallery
-    const cylinderGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2, 32, 32);
-    const cylinderMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1), // White color
-    side: THREE.DoubleSide, transparent: true, opacity: 0.3, // Set the opacity (0.0 to 1.0)
-    });
-    const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-    scene.add(cylinderMesh);
-    //Images
+    // const cylinderGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2, 32, 32, true); // Set openEnded to true
+    // const cylinderMaterial = new THREE.MeshBasicMaterial({
+    //   color: new THREE.Color(1, 1, 1), // White color
+    //   side: THREE.DoubleSide,
+    //   transparent: true,
+    //   opacity: 0.0, // Set the opacity (0.0 to 1.0)
+    // });
+    // const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+    // scene.add(cylinderMesh);
+
+    // Images
     const imageLoader = new THREE.TextureLoader();
     const texture1 = imageLoader.load('sky3.jpg');
     const texture2 = imageLoader.load('sky5.jpg');
+    const texture3 = imageLoader.load('sky6.jpg');
 
-    const planeGeometry1 = new THREE.PlaneGeometry(0.4, 0.3); // Image size
-    const planeGeometry2 = new THREE.PlaneGeometry(0.4, 0.3); // Image size
-    
-    const planeMaterial1 = new THREE.MeshBasicMaterial({ map: texture1 }); // Use the appropriate texture
-    const planeMaterial2 = new THREE.MeshBasicMaterial({ map: texture2 }); // Use the appropriate texture
-    const planeMesh1 = new THREE.Mesh(planeGeometry1, planeMaterial1);
-    const planeMesh2 = new THREE.Mesh(planeGeometry2, planeMaterial2);
+    const texture4 = imageLoader.load('sky4.jpg');
+    const texture5 = imageLoader.load('sky4.jpg');
+    const texture6 = imageLoader.load('sky4.jpg');
 
-   // Position the planes (images) on the inner surface of the cylinder
-    planeMesh1.position.set(0, 0, 0.4); // Adjust x, y, and z coordinates
-    planeMesh2.position.set(planeGeometry1.x + 0.2, 0, 0); // Adjust x, y, and z coordinates
-    // Rotate the planes to face inward
-    planeMesh1.rotation.y = Math.PI;
-    planeMesh2.rotation.y = Math.PI;
+
+
+    // Create materials with textures for the images
+    const planeMaterial1 = new THREE.MeshBasicMaterial({ map: texture1 });
+    const planeMaterial2 = new THREE.MeshBasicMaterial({ map: texture2 });
+    const planeMaterial3 = new THREE.MeshBasicMaterial({ map: texture3 });
+
+    const planeMaterial4 = new THREE.MeshBasicMaterial({ map: texture4 });
+    const planeMaterial5 = new THREE.MeshBasicMaterial({ map: texture5 });
+    const planeMaterial6 = new THREE.MeshBasicMaterial({ map: texture6 });
+
+
+    // Create planes for the images
+    const planeGeometry = new THREE.PlaneGeometry(0.3, 0.2); // Image size
+    const planeMesh1 = new THREE.Mesh(planeGeometry, planeMaterial1);
+    const planeMesh2 = new THREE.Mesh(planeGeometry, planeMaterial2);
+    const planeMesh3 = new THREE.Mesh(planeGeometry, planeMaterial3);
+
+    const planeMesh4 = new THREE.Mesh(planeGeometry, planeMaterial4);
+    const planeMesh5 = new THREE.Mesh(planeGeometry, planeMaterial5);
+    const planeMesh6 = new THREE.Mesh(planeGeometry, planeMaterial6);
+
+
+    // Rotate the planes to face inward if the position on z axis is 0 or more (other side of the gallery)
+    // planeMesh1.rotation.y = Math.PI;
+    // planeMesh2.rotation.y = Math.PI;
+    // planeMesh3.rotation.y = Math.PI;
+
+    planeMesh4.rotation.y = Math.PI;
+    planeMesh5.rotation.y = Math.PI;
+    planeMesh6.rotation.y = Math.PI;
+
+    // Position and scale the planes within the cylinder
+    planeMesh1.position.set(0, 0, -0.4); // Adjust x, y, and z coordinates
+    planeMesh2.position.set(0.35, 0, -0.4);
+    planeMesh3.position.set(-0.35, 0, -0.4);
+
+    planeMesh4.position.set(0, 0, 0.4);
+    planeMesh5.position.set(0.35, 0, 0.4);
+    planeMesh6.position.set(-0.35, 0, 0.4);
+
 
     // Add the planes (images) to the cylinder
-    cylinderMesh.add(planeMesh1);
-    cylinderMesh.add(planeMesh2);
+    // cylinderMesh.add(planeMesh1);
+    // cylinderMesh.add(planeMesh2);
+
+    scene.add(planeMesh1);
+    scene.add(planeMesh2);
+    scene.add(planeMesh3);
+
+    scene.add(planeMesh4);
+    scene.add(planeMesh5);
+    scene.add(planeMesh6);
   }
+
   // Function to change the background image
   function changeBackgroundImage(imageUrl) {
     // Load the new texture
