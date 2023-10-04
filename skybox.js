@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
     <h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
         Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.<br>
+        The warp drive effect is copied and edited from https://codepen.io/NiklasKnaack/pen/OmwgKb.<br>
         You can look around by left clicking and dragging with the mouse.</h2>
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link2">Travel to Gallery</a>
