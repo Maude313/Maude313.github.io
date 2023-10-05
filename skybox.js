@@ -3,6 +3,8 @@
 
 // import * as THREE from '../three.module.js';
 import CameraControls from '../camera-controls.module.js';
+// import CameraControls from '../camera-controls';
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -52,7 +54,14 @@ document.addEventListener('DOMContentLoaded', function () {
   let lastDirectionChange = performance.now();
 
   let enableTransition = cameraControls.enableTransition = true;
-  
+  let warpEnded = true;
+  console.log("WARP ENDED: " + warpEnded);
+
+  skyTexture.onload = function() {
+    // Once the image is loaded, add the 'loaded' class to trigger the fade-in effect
+    backgroundImage.classList.add('fade-in-content');
+  };
+
   function hoveringanimation() {
     requestAnimationFrame(hoveringanimation);
     
@@ -73,8 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       renderer.render(scene, camera);
   }
-
-  hoveringanimation();
+  if (warpEnded) {
+    hoveringanimation();
+  }
   
   // Animation loop camera controls
   function animate() {
@@ -88,8 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
       renderer.render( scene, camera );
     }
   };
-  
-  animate();
+  if (warpEnded) {
+    animate();
+  }
 
   function adjustBrightnessAndContrast(color, brightness, contrast) {
     // Ensure brightness and contrast are within valid ranges
@@ -142,17 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log("rotation");
           console.log(camera.rotation);
           break;
-        case "i":
-          console.log("skyTexture");
-          console.log('Current image:', skyTexture);
-          break;
-        case "m":
-          console.log("skySphere.material");
-          console.log('skySphere material:', skySphere.material);
-          break;
         case "w":
-          console.log("WARP in process ");
-          console.log(warpInProcess);
+          console.log("WARP ENDED " + warpEnded);
           break;
       }
     }
@@ -169,7 +171,9 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link4">Portfolio</a>
   `;
   const galleryContent = `
+  <div id='fade-in-content'>
     <h1 class="header-text" id="header-text">Gallery</h1>
+  </div>
     <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
     <a class="link" id="link3">Back to start</a>
     <a class="currentpage" id="link2">Travel to Gallery</a>
@@ -221,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentContent !== galleryContent) {
           warpInProcess = true;
           handleWarp();
-          currentContent = galleryContent;       
+          currentContent = galleryContent;
         }
         else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent) {
           contentContainer.innerHTML = galleryContent;
@@ -300,6 +304,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   function handleWarp() {
+    warpEnded = false;
+    console.log("WARP ENDED: " + warpEnded);
     if (warpInProcess) {
       // Wrap the entire sequence of animations in a Promise
       const animationPromise = new Promise(async (resolve) => {
@@ -338,8 +344,10 @@ document.addEventListener('DOMContentLoaded', function () {
       skyTexture = textureLoader.load('sky5.jpg');
     }
   }
-
+  
   function loadGalleryContent() {
+    warpEnded = true;
+    console.log("WARP ENDED: " + warpEnded);
     contentContainer.innerHTML = galleryContent;
     changeBackgroundImage('sky5.jpg');
 
@@ -368,8 +376,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const texture5 = imageLoader.load('sky4.jpg');
     const texture6 = imageLoader.load('sky4.jpg');
 
-
-
     // Create materials with textures for the images
     const planeMaterial1 = new THREE.MeshBasicMaterial({ map: texture1 });
     const planeMaterial2 = new THREE.MeshBasicMaterial({ map: texture2 });
@@ -389,7 +395,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const planeMesh4 = new THREE.Mesh(planeGeometry, planeMaterial4);
     const planeMesh5 = new THREE.Mesh(planeGeometry, planeMaterial5);
     const planeMesh6 = new THREE.Mesh(planeGeometry, planeMaterial6);
-
 
     // Rotate the planes to face inward if the position on z axis is 0 or more (other side of the gallery)
     // planeMesh1.rotation.y = Math.PI;
@@ -429,12 +434,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const newSkyTexture = textureLoader.load(imageUrl);
 
     skyTexture = newSkyTexture;
+    skyTexture.onload = function() {
+      // Once the image is loaded, add the 'loaded' class to trigger the fade-in effect
+      skyTexture.classList.add('fade-in-content');
+    };
     // Update the material's map property
     sphereMaterial.map = skyTexture;
     sphereMaterial.needsUpdate = true;
-
     // Remove the old texture from memory (optional)
-    skyTexture.dispose();
+    // skyTexture.dispose();
 
     // Update the skyTexture reference
 

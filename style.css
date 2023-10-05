@@ -3,9 +3,19 @@
     position: absolute; /* Create a positioning context for child elements */
 
 }
-#changing-content {
-    opacity: 1;
-    transition: opacity 2s ease-out;
+
+#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 /* Reset margin and padding for the entire page */
 html, body {
