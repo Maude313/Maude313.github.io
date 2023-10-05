@@ -2,6 +2,7 @@
 
 
 // import * as THREE from '../three.module.js';
+// import { Vector3 } from 'three';
 import CameraControls from '../camera-controls.module.js';
 // import CameraControls from '../camera-controls';
 
@@ -350,82 +351,48 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("WARP ENDED: " + warpEnded);
     contentContainer.innerHTML = galleryContent;
     changeBackgroundImage('sky5.jpg');
-
     // cameraControls.zoom(1, false);
     cameraControls.reset();
 
-
-    // Cylinder wall for the gallery
-    // const cylinderGeometry = new THREE.CylinderGeometry(0.4, 0.4, 2, 32, 32, true); // Set openEnded to true
-    // const cylinderMaterial = new THREE.MeshBasicMaterial({
-    //   color: new THREE.Color(1, 1, 1), // White color
-    //   side: THREE.DoubleSide,
-    //   transparent: true,
-    //   opacity: 0.0, // Set the opacity (0.0 to 1.0)
-    // });
-    // const cylinderMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-    // scene.add(cylinderMesh);
-
-    // Images
+    // Add images
     const imageLoader = new THREE.TextureLoader();
-    const texture1 = imageLoader.load('sky3.jpg');
-    const texture2 = imageLoader.load('sky5.jpg');
-    const texture3 = imageLoader.load('sky6.jpg');
+    const imageUrls = ['sky3.jpg', 'sky5.jpg', 'sky6.jpg', 'sky2.jpg', 'sky4.jpg', 'sky7.jpg']; //When adding new images, add the filenames here
+    const images = [];
+    
+    imageUrls.forEach((url) => {      // Looping through the image urls and adding the loaded images to an array
+      const  image = imageLoader.load(url);
+      images.push(image);
+    });
 
-    const texture4 = imageLoader.load('sky4.jpg');
-    const texture5 = imageLoader.load('sky4.jpg');
-    const texture6 = imageLoader.load('sky4.jpg');
+    const imageGeometry = new THREE.PlaneGeometry(0.3, 0.2); // Image size
+    const imageMeshes = [];
+    let imageMesh;
 
-    // Create materials with textures for the images
-    const planeMaterial1 = new THREE.MeshBasicMaterial({ map: texture1 });
-    const planeMaterial2 = new THREE.MeshBasicMaterial({ map: texture2 });
-    const planeMaterial3 = new THREE.MeshBasicMaterial({ map: texture3 });
+    images.forEach((img) => {       // Looping through the images array and adding material and geometry to each image creating a mesh
+      let imageMaterial = new THREE.MeshBasicMaterial({ map: img });
+      imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+      imageMeshes.push(imageMesh);
+    });
 
-    const planeMaterial4 = new THREE.MeshBasicMaterial({ map: texture4 });
-    const planeMaterial5 = new THREE.MeshBasicMaterial({ map: texture5 });
-    const planeMaterial6 = new THREE.MeshBasicMaterial({ map: texture6 });
+    let imagePosition = new THREE.Vector3(-0.70, 0, -0.4);
+    let imagesAdded = 0;
+    let fullSide = 3; // Determines how many images on one side
 
+    imageMeshes.forEach((mesh) => {
 
-    // Create planes for the images
-    const planeGeometry = new THREE.PlaneGeometry(0.3, 0.2); // Image size
-    const planeMesh1 = new THREE.Mesh(planeGeometry, planeMaterial1);
-    const planeMesh2 = new THREE.Mesh(planeGeometry, planeMaterial2);
-    const planeMesh3 = new THREE.Mesh(planeGeometry, planeMaterial3);
+      if (imagesAdded > 2 & imagesAdded < 7) {      // BUG: adds only to one position on the other side in this statement
+        imagePosition = new THREE.Vector3(-0.70, 0, 0.4);
+        mesh.rotation.y = Math.PI; //divided by 2 it will rotate 90 degrees
+      }
+      let newX = imagePosition.x + 0.35;
+      let newPosition = new THREE.Vector3(newX, imagePosition.y, imagePosition.z);
+      mesh.position.copy(newPosition);
+      scene.add(mesh);
+      imagePosition = newPosition;
+      imagesAdded += 1;
+    });
 
-    const planeMesh4 = new THREE.Mesh(planeGeometry, planeMaterial4);
-    const planeMesh5 = new THREE.Mesh(planeGeometry, planeMaterial5);
-    const planeMesh6 = new THREE.Mesh(planeGeometry, planeMaterial6);
-
-    // Rotate the planes to face inward if the position on z axis is 0 or more (other side of the gallery)
-    // planeMesh1.rotation.y = Math.PI;
-    // planeMesh2.rotation.y = Math.PI;
-    // planeMesh3.rotation.y = Math.PI;
-
-    planeMesh4.rotation.y = Math.PI;
-    planeMesh5.rotation.y = Math.PI;
-    planeMesh6.rotation.y = Math.PI;
-
-    // Position and scale the planes within the cylinder
-    planeMesh1.position.set(0, 0, -0.4); // Adjust x, y, and z coordinates
-    planeMesh2.position.set(0.35, 0, -0.4);
-    planeMesh3.position.set(-0.35, 0, -0.4);
-
-    planeMesh4.position.set(0, 0, 0.4);
-    planeMesh5.position.set(0.35, 0, 0.4);
-    planeMesh6.position.set(-0.35, 0, 0.4);
-
-
-    // Add the planes (images) to the cylinder
-    // cylinderMesh.add(planeMesh1);
-    // cylinderMesh.add(planeMesh2);
-
-    scene.add(planeMesh1);
-    scene.add(planeMesh2);
-    scene.add(planeMesh3);
-
-    scene.add(planeMesh4);
-    scene.add(planeMesh5);
-    scene.add(planeMesh6);
+    console.log("images count " + images.length)
   }
 
   // Function to change the background image
@@ -433,11 +400,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load the new texture
     const newSkyTexture = textureLoader.load(imageUrl);
 
-    skyTexture = newSkyTexture;
-    skyTexture.onload = function() {
+    newSkyTexture.onload = function() {
       // Once the image is loaded, add the 'loaded' class to trigger the fade-in effect
-      skyTexture.classList.add('fade-in-content');
+      newSkyTexture.classList.add('fade-in-content');
     };
+    skyTexture = newSkyTexture;
     // Update the material's map property
     sphereMaterial.map = skyTexture;
     sphereMaterial.needsUpdate = true;

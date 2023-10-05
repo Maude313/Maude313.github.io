@@ -1,3 +1,5 @@
+// Not in use
+
 function imagesToSlotsInCircle() {
 
 
