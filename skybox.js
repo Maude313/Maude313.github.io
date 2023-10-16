@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <h2 id="aboutthiswebsite">Chopin - Nocturne Op.9 No.2 (E Flat Major)</h2>
+  <h2 id="aboutthiswebsite">Distant Sound Of The Sea</h2>
   <div class="visualizer-container"></div>
   <a class="link" id="link3">Back to start</a>
   <a class="currentpage" id="link5">Audio Visualizer</a>
@@ -223,10 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
   
   `;
   // <a id="playAudio" class="link">Play Audio</a>
+  // <h2 id="aboutthiswebsite">Chopin - Nocturne Op.9 No.2 (E Flat Major)</h2>
 
   // const playButton = document.getElementById("playAudio");
-  
+
   function audio() {
+    // The number of bars that should be displayed
+    const numberOfBars = 50;
     // Get the audio tag
     const audio = document.querySelector("audio");
     // Create an audio context
@@ -240,16 +243,20 @@ document.addEventListener('DOMContentLoaded', function () {
     audioSource.connect(audioCtx.destination);
     // Print the analyzed frequencies
     const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+    // const barWidth = 100 / frequencyData.length;
     analyzer.getByteFrequencyData(frequencyData);
     console.log("frequency data ", frequencyData);
     // Get the visualizer container
-     const visualizerContainer = document.querySelector(".visualizer-container");
+    const visualizerContainer = document.querySelector(".visualizer-container");
+
+     
     
     // Create a set of pre-defined bars
-    for (let i = 0; i < frequencyData.length; i++) {
+    for (let i = 0; i < numberOfBars; i++) {
       const bar = document.createElement("DIV");
       bar.setAttribute("id", "bar" +i);
       bar.setAttribute("class", "visualizer-container__bar");
+      // bar.style.width = barWidth + "%";
       visualizerContainer.appendChild(bar);
     }
 
@@ -258,12 +265,14 @@ document.addEventListener('DOMContentLoaded', function () {
      // Update frequency data array with the latest data
       analyzer.getByteFrequencyData(frequencyData);
       
-      for (let i = 0; i < frequencyData.length; i++) {
+      for (let i = 0; i < numberOfBars; i++) {
+        // The frequency data array is 1024 digits in length, so it needs to be downsampled to 50
+        const index = (i + 10) * 2;
+        // fd is a frequency value between 0 and 255
+        const fd = frequencyData[index];
 
-        //a value between 0 and 255 stored in fd
-        const fd = frequencyData[i];
-        // Fetching the bar div element
-        const bar = document.querySelector("bar" + i);
+        // Fetch the bar DIV element
+        const bar = document.querySelector("#bar" + i);
         if (!bar) {
           continue;
         }
@@ -271,9 +280,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const barHeight = Math.max(4, fd || 0); // Minimum height 4
         bar.style.height = barHeight + "px";
       }
+      window.requestAnimationFrame(renderFrame);
     }
 
     renderFrame();
+
+    setInterval(function() {
+      console.log("tick");
+      renderFrame();
+    }, 1000);
+
     audio.volume = 0.22;
     audio.play();
 

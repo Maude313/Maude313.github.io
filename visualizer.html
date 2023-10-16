@@ -111,7 +111,6 @@
             bar.setAttribute("id", "bar" + i);
             bar.setAttribute("class", "visualizer-container__bar");
             visualizerContainer.appendChild(bar);
-
         }
 
         // This function has the task to adjust the bar heights according to the frequency data
@@ -122,8 +121,7 @@
 
             for( let i = 0; i < NBR_OF_BARS; i++ ) {
 
-                // Since the frequency data array is 1024 in length, we don't want to fetch
-                // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
+                // The frequency data array is 1024 digits in length, so it needs to be downsampled to 50
                 const index = (i + 10) * 2;
                 // fd is a frequency value between 0 and 255
                 const fd = frequencyData[index];
