@@ -160,68 +160,72 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
-  
-// InnerHTML content to upload without loading new page
-const startContent = `
-<h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
-<a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-<h2 id="aboutthiswebsite">This interstellar spacecraft is under construction<br><br>Come back later</h2>
-<a class="currentpage" id="link3">Back to start</a>
-<a class="link" id="link5">Audio Visualizer</a>
-<a class="link" id="link2">Gallery</a>
-<a class="link" id="link1">About this website</a>
-<a class="link" id="link4">Portfolio</a>
-`;
-const galleryContent = `
-<div id='fade-in-content'>
-<h1 class="header-text" id="header-text">Gallery</h1>
-</div>
-<a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-<a class="link" id="link3">Back to start</a>
-<a class="link" id="link5">Audio Visualizer</a>
-<a class="currentpage" id="link2">Gallery</a>
-<a class="link" id="link1">About this website</a>
-<a class="link" id="link4">Portfolio</a>
-`;
-const aboutContent = `
-<a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-<h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
-    Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.<br>
-    The warp drive effect is copied and edited from https://codepen.io/NiklasKnaack/pen/OmwgKb.<br>
-    You can look around by left clicking and dragging with the mouse.</h2>
-<a class="link" id="link3">Back to start</a>
-<a class="link" id="link5">Audio Visualizer</a>
-<a class="link" id="link2">Gallery</a>
-<a class="currentpage" id="link1">About this website</a>
-<a class="link" id="link4">Portfolio</a>
-`;
-const portfolioContent = `
-<h1 class="header-text" id="header-text">Portfolio</h1>
-<a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-<h2 id="aboutthiswebsite">There will be content later</h2>
-<a class="link" id="link3">Back to start</a>
-<a class="link" id="link5">Audio Visualizer</a>
-<a class="link" id="link2">Gallery</a>
-<a class="link" id="link1">About this website</a>
-<a class="currentpage" id="link4">Portfolio</a>
-`;
-const audioVisualizerContent = `
-<h1 class="header-text" id="header-text">Audio Visualizer</h1>
-<a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-<a id="playAudio">Play Audio</a>
-<h2 id="aboutthiswebsite">There will be content later</h2>
-<a class="link" id="link3">Back to start</a>
-<a class="currentpage" id="link5">Audio Visualizer</a>
-<a class="link" id="link2">Gallery</a>
-<a class="link" id="link1">About this website</a>
-<a class="link" id="link4">Portfolio</a>
-`;
+ 
+  // InnerHTML content to upload without loading new page
+  const startContent = `
+  <h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <h2 id="aboutthiswebsite">This interstellar spacecraft is under construction<br><br>Come back later</h2>
+  <a class="currentpage" id="link3">Back to start</a>
+  <a class="link" id="link5">Audio Visualizer</a>
+  <a class="link" id="link2">Gallery</a>
+  <a class="link" id="link1">About this website</a>
+  <a class="link" id="link4">Portfolio</a>
+  `;
+  const galleryContent = `
+  <div id='fade-in-content'>
+  <h1 class="header-text" id="header-text">Gallery</h1>
+  </div>
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <a class="link" id="link3">Back to start</a>
+  <a class="link" id="link5">Audio Visualizer</a>
+  <a class="currentpage" id="link2">Gallery</a>
+  <a class="link" id="link1">About this website</a>
+  <a class="link" id="link4">Portfolio</a>
+  `;
+  const aboutContent = `
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
+      Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.<br>
+      The warp drive effect is copied and edited from https://codepen.io/NiklasKnaack/pen/OmwgKb.<br>
+      You can look around by left clicking and dragging with the mouse.</h2>
+  <a class="link" id="link3">Back to start</a>
+  <a class="link" id="link5">Audio Visualizer</a>
+  <a class="link" id="link2">Gallery</a>
+  <a class="currentpage" id="link1">About this website</a>
+  <a class="link" id="link4">Portfolio</a>
+  `;
+  const portfolioContent = `
+  <h1 class="header-text" id="header-text">Portfolio</h1>
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <h2 id="aboutthiswebsite">There will be content later</h2>
+  <a class="link" id="link3">Back to start</a>
+  <a class="link" id="link5">Audio Visualizer</a>
+  <a class="link" id="link2">Gallery</a>
+  <a class="link" id="link1">About this website</a>
+  <a class="currentpage" id="link4">Portfolio</a>
+  `;
+  const audioVisualizerContent = `
+  <h1 class="header-text" id="header-text">Audio Visualizer</h1>
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <a id="playAudio" class="link">Play Audio</a>
+  <h2 id="aboutthiswebsite">There will be content later</h2>
+  <a class="link" id="link3">Back to start</a>
+  <a class="currentpage" id="link5">Audio Visualizer</a>
+  <a class="link" id="link2">Gallery</a>
+  <a class="link" id="link1">About this website</a>
+  <a class="link" id="link4">Portfolio</a>
+  `;
   const curriculumVitaeContent = `
   
   `;
   const puzzleContent = `
   
   `;
+
+  const playButton = document.getElementById("playAudio");
+  const audio = document.getElementById("chopin");
+
   contentContainer.innerHTML = startContent;
   let currentContent;
   let warpInProcess;
@@ -273,6 +277,7 @@ const audioVisualizerContent = `
       case 'header-text':
         break
       case 'playAudio':
+        audio.play();
         break;
       default:
         contentContainer.innerHTML = `
@@ -280,6 +285,7 @@ const audioVisualizerContent = `
         `
         break;
     }
+    
     console.log("content " + contentContainer.innerHTML);
 
     // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
@@ -323,12 +329,6 @@ const audioVisualizerContent = `
     toggleFullScreen();
   });
 
-  const playButton = document.getElementById("playAudio");
-  const audio = document.getElementById("myAudio");
-
-  playButton.addEventListener("click", function () {
-    audio.play();
-  });
   function handleWarp() {
     warpEnded = false;
     console.log("WARP ENDED: " + warpEnded);
@@ -401,12 +401,11 @@ const audioVisualizerContent = `
 
     let imagePosition = new THREE.Vector3(-0.70, 0, -0.4);
     let imagesAdded = 0;
-    let fullSide = 3; // Determines how many images on one side
-
-    imageMeshes.forEach((mesh) => {
-      if (imagesAdded > 2) {      // BUG: adds only to one position on the other side in this statement
+  
+    imageMeshes.forEach((mesh, imageUrl, index) => {
+      if (imagesAdded > 2) {
         imagePosition.z = 0.4;
-        mesh.rotation.y = Math.PI; //divided by 2 it will rotate 90 degrees
+        mesh.rotation.y = Math.PI; //if divided by 2 it will rotate 90 degrees
         if (imagesAdded == 3) {
           imagePosition.x = -0.70;
         }
@@ -420,6 +419,7 @@ const audioVisualizerContent = `
     });
 
     console.log("images count " + images.length)
+    
   }
 
   // Function to change the background image
