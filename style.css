@@ -77,12 +77,16 @@ html, body {
 }
 
 #link3 {
-    bottom: 70px;
+    bottom: 90px;
     left: 100px;
 }
 
 #link4 {
     bottom: 50px;
+    left: 100px;
+}
+#link5 {
+    bottom: 70px;
     left: 100px;
 }
 
@@ -128,6 +132,16 @@ html, body {
     z-index: 0; /* Place the text above the background */
     text-align: center; /* Center-align the text */
     font-size: 2rem; /* Adjust font size as needed */
+}
+
+#playAudio {
+    cursor: pointer;
+    position: absolute; /* Position the text element */
+    top: 30%; /* Adjust to vertically center the text */
+    left: 90%; /* Adjust to horizontally center the text */
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    z-index: 0; /* Place the text above the background */
+    text-align: center; /* Center-align the text */
 }
 
 /* ---------------------------WARP----------------------- */
