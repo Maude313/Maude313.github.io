@@ -144,6 +144,23 @@ html, body {
     text-align: center; /* Center-align the text */
 }
 
+.visualizer-container {
+    position: relative;
+    bottom: 350px;
+    right: 0;
+    left: 0;
+    height: 200px;
+    text-align: center;
+}
+
+.visualizer-container__bar {
+    display: inline-block;
+    background: #7e7efa;
+    margin: 0 2px;
+    width: 20px;
+    height: 200px;
+}
+
 /* ---------------------------WARP----------------------- */
 
 html, body, div, span, applet, object, iframe,

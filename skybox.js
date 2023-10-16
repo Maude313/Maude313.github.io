@@ -208,8 +208,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <a id="playAudio" class="link">Play Audio</a>
-  <h2 id="aboutthiswebsite">There will be content later</h2>
+  <h2 id="aboutthiswebsite">Chopin - Nocturne Op.9 No.2 (E Flat Major)</h2>
+  <div class="visualizer-container"></div>
   <a class="link" id="link3">Back to start</a>
   <a class="currentpage" id="link5">Audio Visualizer</a>
   <a class="link" id="link2">Gallery</a>
@@ -222,9 +222,62 @@ document.addEventListener('DOMContentLoaded', function () {
   const puzzleContent = `
   
   `;
+  // <a id="playAudio" class="link">Play Audio</a>
 
-  const playButton = document.getElementById("playAudio");
-  const audio = document.getElementById("chopin");
+  // const playButton = document.getElementById("playAudio");
+  
+  function audio() {
+    // Get the audio tag
+    const audio = document.querySelector("audio");
+    // Create an audio context
+    var audioCtx = new AudioContext();
+    // Create an audio source (the audio file)
+    const audioSource = audioCtx.createMediaElementSource(audio);
+    // Create an audio analyzer
+    const analyzer = audioCtx.createAnalyser();
+    // Connect the source audio with the analyzer, and then pipe it back to the context's destination (the analyzer is a middlewear)
+    audioSource.connect(analyzer);
+    audioSource.connect(audioCtx.destination);
+    // Print the analyzed frequencies
+    const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+    analyzer.getByteFrequencyData(frequencyData);
+    console.log("frequency data ", frequencyData);
+    // Get the visualizer container
+     const visualizerContainer = document.querySelector(".visualizer-container");
+    
+    // Create a set of pre-defined bars
+    for (let i = 0; i < frequencyData.length; i++) {
+      const bar = document.createElement("DIV");
+      bar.setAttribute("id", "bar" +i);
+      bar.setAttribute("class", "visualizer-container__bar");
+      visualizerContainer.appendChild(bar);
+    }
+
+    // Adjust bar height according to frequency data
+    function renderFrame() {
+     // Update frequency data array with the latest data
+      analyzer.getByteFrequencyData(frequencyData);
+      
+      for (let i = 0; i < frequencyData.length; i++) {
+
+        //a value between 0 and 255 stored in fd
+        const fd = frequencyData[i];
+        // Fetching the bar div element
+        const bar = document.querySelector("bar" + i);
+        if (!bar) {
+          continue;
+        }
+
+        const barHeight = Math.max(4, fd || 0); // Minimum height 4
+        bar.style.height = barHeight + "px";
+      }
+    }
+
+    renderFrame();
+    audio.volume = 0.22;
+    audio.play();
+
+  }
 
   contentContainer.innerHTML = startContent;
   let currentContent;
@@ -269,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function () {
       case 'link5':
         event.preventDefault();
         contentContainer.innerHTML = audioVisualizerContent;
+        audio();
         break;
       case 'toggle_full_screen':
         break;
@@ -276,9 +330,9 @@ document.addEventListener('DOMContentLoaded', function () {
         break
       case 'header-text':
         break
-      case 'playAudio':
-        audio.play();
-        break;
+      // case 'playAudio':
+      //   audio.play();
+      //   break;
       default:
         contentContainer.innerHTML = `
         <p class="content">Something went wrong. Please try again.</p>
@@ -294,9 +348,9 @@ document.addEventListener('DOMContentLoaded', function () {
       // Add or update the click event listener for the new full-screen button
       fullScreenButtonNew.addEventListener('click', toggleFullScreen);
     }
-
+    
   });
-
+  
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       // If not in fullscreen mode, enter fullscreen
@@ -322,9 +376,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-
+  
   let fullscreenBtn = document.getElementById("toggle_full_screen");
-
+  
   fullscreenBtn.addEventListener("click", function() {
     toggleFullScreen();
   });
