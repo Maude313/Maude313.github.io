@@ -1,12 +1,4 @@
-
-
-
-// import * as THREE from '../three.module.js';
-// import { Vector3 } from 'three';
 import CameraControls from '../camera-controls.module.js';
-// import CameraControls from '../camera-controls';
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
   
@@ -95,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     requestAnimationFrame(animate);    
     // renderer.render( scene, camera );
-    if ( hasControlsUpdated ) {
+    if (hasControlsUpdated) {
       renderer.render( scene, camera );
     }
   };
@@ -228,10 +220,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // const playButton = document.getElementById("playAudio");
 
   let audioIsPlaying = false;
+
   function audio() {
     let audioSource;
     let analyzer;
     let frequencyData;
+
     // The number of bars that should be displayed
     const numberOfBars = 50;
     // Get the audio tag
@@ -247,10 +241,9 @@ document.addEventListener('DOMContentLoaded', function () {
       // Connect the source audio with the analyzer, and then pipe it back to the context's destination (the analyzer is a middlewear)
       audioSource.connect(analyzer);
       audioSource.connect(audioCtx.destination);
-      // Print the analyzed frequencies
       frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-      // const barWidth = 100 / frequencyData.length;
       analyzer.getByteFrequencyData(frequencyData);
+      // Print the analyzed frequencies
       console.log("frequency data ", frequencyData);
     }
 
@@ -260,10 +253,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Create a set of pre-defined bars
     for (let i = 0; i < numberOfBars; i++) {
-      const bar = document.createElement("DIV");
+      const bar = document.createElement("div");
       bar.setAttribute("id", "bar" +i);
       bar.setAttribute("class", "visualizer-container__bar");
-      // bar.style.width = barWidth + "%";
       visualizerContainer.appendChild(bar);
     }
 
@@ -293,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderFrame();
 
-    audio.volume = 0.22;
+    audio.volume = 0.50;
     audio.play();
     audioIsPlaying = true;
   }
@@ -316,12 +308,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentContent !== galleryContent) {
           warpInProcess = true;
           handleWarp();
-          currentContent = galleryContent;
+          // currentContent = galleryContent;
         }
         else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent || contentContainer.innerHTML === audioVisualizerContent) {
           contentContainer.innerHTML = galleryContent;
-          currentContent = galleryContent;       
+          // currentContent = galleryContent;       
         }
+        currentContent = galleryContent;       
         break;
       case 'link3':
         if (currentContent === galleryContent) {
@@ -355,13 +348,11 @@ document.addEventListener('DOMContentLoaded', function () {
       case 'visualizer-container-id':
         event.preventDefault();
         break
-      // case 'playAudio':
-      //   audio.play();
-      //   break;
       default:
-        contentContainer.innerHTML = `
-        <p class="content">Something went wrong. Please try again.</p>
-        `
+        // contentContainer.innerHTML = `
+        // <p class="content">Something went wrong. Please try again.</p>
+        // `
+        contentContainer.innerHTML = contentContainer.innerHTML;
         break;
     }
     console.log("content " + contentContainer.innerHTML);
@@ -462,8 +453,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const imageUrls = ['sky3.jpg', 'sky5.jpg', 'sky6.jpg', 'sky2.jpg', 'sky4.jpg', 'sky7.jpg']; //When adding new images, add the filenames here
     const images = [];
     
+    let index = 0;
+    let image = null;
+    
     imageUrls.forEach((url) => {      // Looping through the image urls and adding the loaded images to an array
-      const  image = imageLoader.load(url);
+      index++;
+      image = imageLoader.load(url);
+      image.name = `image_${index}`;
+      console.log(image.name);
       images.push(image);
     });
 
@@ -476,6 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
       imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
       imageMeshes.push(imageMesh);
     });
+
 
     let imagePosition = new THREE.Vector3(-0.70, 0, -0.4);
     let imagesAdded = 0;
@@ -497,7 +495,127 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     console.log("images count " + images.length)
+
+//---------------option-1
+
+    // let imgContainer = document.querySelector('.imagecontainer');
+
+    // // Create and append an overlay element for each image
+    // imageUrls.forEach((url, index) => {
+    //   // Create a new div element for the overlay
+    //   let imageOverlay = document.createElement("div");
+      
+    //   // Add a class to style the overlay and to select it with querySelectorAll
+    //   imageOverlay.className = "image-overlay";
+      
+    //   // Set a unique ID for the overlay, you can use index or any other unique identifier
+    //   imageOverlay.id = `imageOverlay_${index}`;
+      
+    //   // Handle click events for each overlay
+    //   imageOverlay.addEventListener('click', () => {
+    //     switch (index) {
+    //       case 0:
+    //         alert("Image 1 clicked");
+    //         break;
+    //       case 1:
+    //         alert("Image 2 clicked");
+    //         break;
+    //       // Add more cases for other overlays
+    //     }
+    //   });
+      
+    //   // Append the overlay to the image container
+    //   imgContainer.appendChild(imageOverlay);
+    //   console.log(imgContainer);
+    // });
+
+    //------------------option 0
+
+    // imageOverlays.forEach((overlay, index) => {
+    //   overlay.addEventListener('click', () => {
+    //     // Handle the click event for each overlay
+    //     switch (index) {
+    //       case 0:
+    //         // Handle click for the first image overlay
+    //         break;
+    //       case 1:
+    //         // Handle click for the second image overlay
+    //         break;
+    //       // Add more cases for other overlays
+    //     }
+    //   });
+    // });
+
+
+//--------------option 1
+    // // Create a raycaster
+    // const raycaster = new THREE.Raycaster();
+
+    // // Add an event listener for mouse clicks
+    // renderer.domElement.addEventListener('click', onClick);
+
+    // function onClick(event) {
+    //   event.preventDefault();
+
+    //   // Calculate mouse position in normalized device coordinates
+    //   const mouse = new THREE.Vector2(
+    //     (event.clientX / window.innerWidth) * 2 - 1,
+    //     -(event.clientY / window.innerHeight) * 2 + 1
+    //   );
+
+    //   // Update the picking ray with the camera and mouse position
+    //   raycaster.setFromCamera(mouse, camera);
+
+    //   // Find intersections with your 3D objects (images)
+    //   const intersections = raycaster.intersectObjects(imageMeshes, true);
+
+    //   if (intersections.length > 0) {
+    //     // An intersection occurred; handle the click
+    //     const imageClicked = intersections[0].object;
+    //     const imageName = imageClicked.name; // Assign a unique name to each image
+    //     // Perform actions based on the image clicked
+    //     switch (imageName) {
+    //       case 'image_1':
+    //         alert("image 1 clicked");
+    //         break;
+    //       case 'image_2':
+    //         alert("image 2 clicked");
+    //         break;
+    //       // Add more cases for other images
+    //     }
+    //   }
+    // }
+//-------------------------option2
+    // images.forEach((image) => {
+
+    //   document.body.appendChild(image);
+
+    //   image.addEventListener('click', (event) => {
+
+    //     const imageName = event.target.name;
     
+    //     switch (imageName) {
+    //       case 'image_1':
+    //         alert('Image 1 clicked');
+    //         break;
+    //       case 'image_2':
+    //         alert('Image 2 clicked');
+    //         break;
+    //       case 'image_3':
+    //         alert("image 3");
+    //         break
+    //       case 'image_4':
+    //         alert("image 4");
+    //         break
+    //       case 'image_5':
+    //         alert("image 5");
+    //         break
+    //       case 'image_6':
+    //         alert("image 6");
+    //         break
+    //     }
+    //   });
+    // });    
   }
 
   // Function to change the background image
