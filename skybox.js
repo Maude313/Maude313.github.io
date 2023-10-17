@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <h2 id="aboutthiswebsite">Distant Sound Of The Sea</h2>
+  <h2 id="aboutthiswebsite">Chopin - Nocturne Op. 9 No. 2 (E Flat Major)</h2>
   <div class="visualizer-container"></div>
   <a class="link" id="link3">Back to start</a>
   <a class="currentpage" id="link5">Audio Visualizer</a>
@@ -227,29 +227,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // const playButton = document.getElementById("playAudio");
 
+  let audioIsPlaying = false;
   function audio() {
+    let audioSource;
+    let analyzer;
+    let frequencyData;
     // The number of bars that should be displayed
     const numberOfBars = 50;
     // Get the audio tag
     const audio = document.querySelector("audio");
-    // Create an audio context
-    var audioCtx = new AudioContext();
-    // Create an audio source (the audio file)
-    const audioSource = audioCtx.createMediaElementSource(audio);
-    // Create an audio analyzer
-    const analyzer = audioCtx.createAnalyser();
-    // Connect the source audio with the analyzer, and then pipe it back to the context's destination (the analyzer is a middlewear)
-    audioSource.connect(analyzer);
-    audioSource.connect(audioCtx.destination);
-    // Print the analyzed frequencies
-    const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-    // const barWidth = 100 / frequencyData.length;
-    analyzer.getByteFrequencyData(frequencyData);
-    console.log("frequency data ", frequencyData);
+    if (!audioIsPlaying) {
+
+      // Create an audio context
+      var audioCtx = new AudioContext();
+      // Create an audio source (the audio file)
+      audioSource = audioCtx.createMediaElementSource(audio);
+      // Create an audio analyzer
+      analyzer = audioCtx.createAnalyser();
+      // Connect the source audio with the analyzer, and then pipe it back to the context's destination (the analyzer is a middlewear)
+      audioSource.connect(analyzer);
+      audioSource.connect(audioCtx.destination);
+      // Print the analyzed frequencies
+      frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+      // const barWidth = 100 / frequencyData.length;
+      analyzer.getByteFrequencyData(frequencyData);
+      console.log("frequency data ", frequencyData);
+    }
+
     // Get the visualizer container
     const visualizerContainer = document.querySelector(".visualizer-container");
-
-     
+    visualizerContainer.setAttribute('id', "visualizer-container-id");
     
     // Create a set of pre-defined bars
     for (let i = 0; i < numberOfBars; i++) {
@@ -262,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Adjust bar height according to frequency data
     function renderFrame() {
+
      // Update frequency data array with the latest data
       analyzer.getByteFrequencyData(frequencyData);
       
@@ -285,14 +293,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderFrame();
 
-    setInterval(function() {
-      console.log("tick");
-      renderFrame();
-    }, 1000);
-
     audio.volume = 0.22;
     audio.play();
-
+    audioIsPlaying = true;
   }
 
   contentContainer.innerHTML = startContent;
@@ -346,6 +349,12 @@ document.addEventListener('DOMContentLoaded', function () {
         break
       case 'header-text':
         break
+      case 'bar':
+        event.preventDefault();
+        break
+      case 'visualizer-container-id':
+        event.preventDefault();
+        break
       // case 'playAudio':
       //   audio.play();
       //   break;
@@ -355,7 +364,6 @@ document.addEventListener('DOMContentLoaded', function () {
         `
         break;
     }
-    
     console.log("content " + contentContainer.innerHTML);
 
     // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
