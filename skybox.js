@@ -162,22 +162,26 @@ document.addEventListener('DOMContentLoaded', function () {
   <h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <h2 id="aboutthiswebsite">This interstellar spacecraft is under construction<br><br>Come back later</h2>
-  <a class="currentpage" id="link3">Back to start</a>
-  <a class="link" id="link5">Audio Visualizer</a>
-  <a class="link" id="link2">Gallery</a>
-  <a class="link" id="link1">About this website</a>
-  <a class="link" id="link4">Portfolio</a>
+  <div class="navbar">
+    <a class="currentpage" id="link3">Back to start</a>
+    <a class="link" id="link5">Audio Visualizer</a>
+    <a class="link" id="link2">Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
+  </div>
   `;
   const galleryContent = `
   <div id='fade-in-content'>
   <h1 class="header-text" id="header-text">Gallery</h1>
   </div>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <a class="link" id="link3">Back to start</a>
-  <a class="link" id="link5">Audio Visualizer</a>
-  <a class="currentpage" id="link2">Gallery</a>
-  <a class="link" id="link1">About this website</a>
-  <a class="link" id="link4">Portfolio</a>
+  <div class="navbar">
+    <a class="link" id="link3">Back to start</a>
+    <a class="link" id="link5">Audio Visualizer</a>
+    <a class="currentpage" id="link2">Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
+  </div>
   `;
   const aboutContent = `
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
@@ -185,32 +189,39 @@ document.addEventListener('DOMContentLoaded', function () {
       Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.<br>
       The warp drive effect is copied and edited from https://codepen.io/NiklasKnaack/pen/OmwgKb.<br>
       You can look around by left clicking and dragging with the mouse.</h2>
-  <a class="link" id="link3">Back to start</a>
-  <a class="link" id="link5">Audio Visualizer</a>
-  <a class="link" id="link2">Gallery</a>
-  <a class="currentpage" id="link1">About this website</a>
-  <a class="link" id="link4">Portfolio</a>
+  <div class="navbar">
+    <a class="link" id="link3">Back to start</a>
+    <a class="link" id="link5">Audio Visualizer</a>
+    <a class="link" id="link2">Gallery</a>
+    <a class="currentpage" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
+  </div>
   `;
   const portfolioContent = `
   <h1 class="header-text" id="header-text">Portfolio</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <h2 id="aboutthiswebsite">There will be content later</h2>
-  <a class="link" id="link3">Back to start</a>
-  <a class="link" id="link5">Audio Visualizer</a>
-  <a class="link" id="link2">Gallery</a>
-  <a class="link" id="link1">About this website</a>
-  <a class="currentpage" id="link4">Portfolio</a>
+  <div class="navbar">
+    <a class="link" id="link3">Back to start</a>
+    <a class="link" id="link5">Audio Visualizer</a>
+    <a class="link" id="link2">Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="currentpage" id="link4">Portfolio</a>
+  </div>
   `;
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <a id="playAudio" class="link">Play Audio</a>
   <h2 id="aboutthiswebsite">Chopin - Nocturne Op. 9 No. 2 (E Flat Major)</h2>
   <div class="visualizer-container"></div>
-  <a class="link" id="link3">Back to start</a>
-  <a class="currentpage" id="link5">Audio Visualizer</a>
-  <a class="link" id="link2">Gallery</a>
-  <a class="link" id="link1">About this website</a>
-  <a class="link" id="link4">Portfolio</a>
+  <div class="navbar">
+    <a class="link" id="link3">Back to start</a>
+    <a class="currentpage" id="link5">Audio Visualizer</a>
+    <a class="link" id="link2">Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">Portfolio</a>
+  </div>
   `;
   const curriculumVitaeContent = `
   
@@ -345,8 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
         audioVisualsOn = true;
         event.preventDefault();
         contentContainer.innerHTML = audioVisualizerContent;
-        audio();
         break;
+      case 'playAudio':
+        audio();
       case 'toggle_full_screen':
         break;
       case 'aboutthiswebsite':
