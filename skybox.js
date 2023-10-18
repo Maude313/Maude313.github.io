@@ -326,6 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
           // currentContent = galleryContent;       
         }
         audioVisualsOn = false;
+        contentContainer.innerHTML = galleryContent;
         currentContent = galleryContent;       
         break;
       case 'link3':
