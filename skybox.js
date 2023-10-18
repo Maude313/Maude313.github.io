@@ -56,79 +56,76 @@ document.addEventListener('DOMContentLoaded', function () {
     backgroundImage.classList.add('fade-in-content');
   };
 
-  function hoveringanimation() {
-
-    requestAnimationFrame(hoveringanimation);
-    
-    if (warpEnded) {
-      if (performance.now() - lastDirectionChange > changeDirectionIntervalX) {
-        // Reverse the rotation direction
-        rotationDirection *= -1;
-        lastDirectionChange = performance.now();
-      }
-      
-      let xOrY = Math.random();
-      // Rotate the sky sphere based on the current rotation axis and direction
-      if (xOrY < 0.7) {
-        skySphere.rotation.x += 0.00009 * rotationDirection;
-        }
-      else {
-        skySphere.rotation.y += 0.00009 * rotationDirection;
-      }
-  
-        renderer.render(scene, camera);
-        console.log("hover animation called")
-    } else {
-      console.log("waiting to hover again");
-    }
-  }
-
-  hoveringanimation();
-  
-  // Animation loop camera controls
+  // Animation loop for camera controls and hovering effect
   function animateCamera() {
+    
     // update the time
     const delta = clock.getDelta();
     const hasControlsUpdated = cameraControls.update(delta);
     
     requestAnimationFrame(animateCamera);    
-    // renderer.render( scene, camera );
     if (hasControlsUpdated) {
-      renderer.render( scene, camera );
+
+      renderer.render(scene, camera);
       console.log("animate camera on")
+
+    } else {    //Rotate the background sphere back and forth to create a "space craft hovering in the air" effect
+
+      if (warpEnded) {
+
+        if (performance.now() - lastDirectionChange > changeDirectionIntervalX) {
+          // Reverse the rotation direction
+          rotationDirection *= -1;
+          lastDirectionChange = performance.now();
+        }
+        
+        let xOrY = Math.random();
+
+        // Rotate the sky sphere based on the current rotation axis and direction
+        if (xOrY < 0.7) {
+          skySphere.rotation.x += 0.00009 * rotationDirection;
+        }
+
+        else {
+          skySphere.rotation.y += 0.00009 * rotationDirection;
+        }
+
+        renderer.render(scene, camera);
+        console.log("hover animation called")
+      }
     }
   };
 
   animateCamera();
   
 
-  function adjustBrightnessAndContrast(color, brightness, contrast) {
-    // Ensure brightness and contrast are within valid ranges
-    brightness = Math.max(-1, Math.min(1, brightness)); // Range: [-1, 1]
-    contrast = Math.max(0, contrast); // Range: [0, ∞)
+  // function adjustBrightnessAndContrast(color, brightness, contrast) {
+  //   // Ensure brightness and contrast are within valid ranges
+  //   brightness = Math.max(-1, Math.min(1, brightness)); // Range: [-1, 1]
+  //   contrast = Math.max(0, contrast); // Range: [0, ∞)
 
-    // Adjust brightness
-    color.r += brightness;
-    color.g += brightness;
-    color.b += brightness;
+  //   // Adjust brightness
+  //   color.r += brightness;
+  //   color.g += brightness;
+  //   color.b += brightness;
 
-    // Adjust contrast
-    const midpoint = 0.5; // Midpoint gray (range: [0, 1])
-    color.r = (color.r - midpoint) * contrast + midpoint;
-    color.g = (color.g - midpoint) * contrast + midpoint;
-    color.b = (color.b - midpoint) * contrast + midpoint;
+  //   // Adjust contrast
+  //   const midpoint = 0.5; // Midpoint gray (range: [0, 1])
+  //   color.r = (color.r - midpoint) * contrast + midpoint;
+  //   color.g = (color.g - midpoint) * contrast + midpoint;
+  //   color.b = (color.b - midpoint) * contrast + midpoint;
 
-    // Clamp RGB components to the valid range [0, 1]
-    color.r = Math.min(1, Math.max(0, color.r));
-    color.g = Math.min(1, Math.max(0, color.g));
-    color.b = Math.min(1, Math.max(0, color.b));
+  //   // Clamp RGB components to the valid range [0, 1]
+  //   color.r = Math.min(1, Math.max(0, color.r));
+  //   color.g = Math.min(1, Math.max(0, color.g));
+  //   color.b = Math.min(1, Math.max(0, color.b));
 
-    return color;
-  }
-  const originalEmissiveColor = new THREE.Color(0xff0000);
+  //   return color;
+  // }
+  // const originalEmissiveColor = new THREE.Color(0xff0000);
 
-  // Adjusted emissive color with increased brightness and contrast
-  const adjustedEmissiveColor = adjustBrightnessAndContrast(originalEmissiveColor, 0.2, 1.5);
+  // // Adjusted emissive color with increased brightness and contrast
+  // const adjustedEmissiveColor = adjustBrightnessAndContrast(originalEmissiveColor, 0.2, 1.5);
 
   // Handle window resize
   window.addEventListener('resize', () => {
@@ -139,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
     camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(newWidth, newHeight);
-    });
+  });
 
   // Debug event listeners
   window.addEventListener("keydown", function (event) {
@@ -319,11 +316,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentContent !== galleryContent) {
           warpInProcess = true;
           handleWarp();
-          // currentContent = galleryContent;
         }
         else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent || contentContainer.innerHTML === audioVisualizerContent) {
           contentContainer.innerHTML = galleryContent;
-          // currentContent = galleryContent;       
         }
         audioVisualsOn = false;
         contentContainer.innerHTML = galleryContent;
@@ -673,12 +668,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var colorInvertValue = 0;
   function warp() {
     if (!warpInProcess) {
-      console.log("warp has ended");
+      console.log("!warpInProcess");
       return
     }
     else {
       warpInProcess = true;
-      console.log("warping function started");
+      console.log("warpInProcess");
 
       var isMobile = false;
 
@@ -892,16 +887,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
       //---
 
-      // window.requestAnimFrame = ( function() {
+      window.requestAnimationFrame = ( function() {
 
-      //   return  window.requestAnimationFrame       ||
-      //     window.webkitRequestAnimationFrame ||
-      //     window.mozRequestAnimationFrame    ||
-      //     function( callback ) {
-      //     window.setTimeout( callback, 1000 / 60 );
-      //   };
+        return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ) {
+          window.setTimeout( callback, 1000 / 60 );
+        };
 
-      // } )();
+      } )();
 
       function animloop() {
         if (!warpEnded) {
@@ -976,7 +971,6 @@ document.addEventListener('DOMContentLoaded', function () {
             requestAnimationFrame(animate);
             console.log("Start the warp animation 'animate'");
           }
-          warpInProcess = false;
           //---
 
           //End of my part
@@ -1134,8 +1128,9 @@ document.addEventListener('DOMContentLoaded', function () {
         addParticles();
         animloop();
       }
-      console.log('warpInProcess ' + warpInProcess);
     }
+    warpInProcess = false;
+    console.log('warpInProcess ' + warpInProcess);
   }
 });
 

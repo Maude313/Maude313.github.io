@@ -19,7 +19,6 @@
     }
 }
 
-/* Reset margin and padding for the entire page */
 html, body {
     margin: 0;
     padding: 0;
@@ -120,13 +119,13 @@ html, body {
     background-color: transparent;
     color: inherit;
     text-shadow: 0 0 6px #9ed908, 0 0 7px #e6ed0a;;
-  }
+}
   
-  /* Change the background and text color of the selected text when unfocused */
-  ::-moz-selection {
-    background-color: inherit;
-    color: inherit;
-  }
+/* Change the background and text color of the selected text when unfocused */
+::-moz-selection {
+background-color: inherit;
+color: inherit;
+}
 
 /* Style for the header text */
 .header-text {
@@ -199,11 +198,10 @@ html, body {
 
 .image-overlay {
     position: absolute;
-    width: 100px; /* Adjust the size and position as needed */
+    width: 100px;
     height: 100px;
     background-color: rgba(248, 6, 6, 0.5); /* Semi-transparent background */
     cursor: pointer;
-    /* Add other styling as needed */
   }
 
 
