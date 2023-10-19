@@ -212,7 +212,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <a id="playAudio" class="link">Play Audio</a>
+  <div class="audioButtons">
+    <a id="playAudio" class="link">Play Audio</a>
+    <a id="stopAudio" class="link">Pause Audio</a>
+  </div>
   <h2 id="aboutthiswebsite">Chopin - Nocturne Op. 9 No. 2 (E Flat Major)</h2>
   <div class="visualizer-container"></div>
   <div class="navbar">
@@ -236,79 +239,119 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let audioIsPlaying = false;
   let audioVisualsOn = false;
+  let playButtonSelected = false;
+  let shouldCreateVisuals = true;
+  let shouldCreateAudio = true;
+  // let audioSource;
+  // let analyzer;
+  // let frequencyData;
+  let visualizerContainer;
+  const numberOfBars = 50;
+  
+  // Initialize the audio context and analyzer
+  var audioCtx = new AudioContext();
+  var audio = document.querySelector("audio");
+  const audioSource = audioCtx.createMediaElementSource(audio);
+  const analyzer = audioCtx.createAnalyser();
+  audioSource.connect(analyzer);
+  audioSource.connect(audioCtx.destination);
+  const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
 
-  function audio() {
-    let audioSource;
-    let analyzer;
-    let frequencyData;
-
-    // The number of bars that should be displayed
-    const numberOfBars = 50;
+  function audioVisuals() {
+    
     // Get the audio tag
     const audio = document.querySelector("audio");
-    if (!audioIsPlaying) {
 
-      // Create an audio context
-      var audioCtx = new AudioContext();
-      // Create an audio source (the audio file)
-      audioSource = audioCtx.createMediaElementSource(audio);
-      // Create an audio analyzer
-      analyzer = audioCtx.createAnalyser();
-      // Connect the source audio with the analyzer, and then pipe it back to the context's destination (the analyzer is a middlewear)
-      audioSource.connect(analyzer);
-      audioSource.connect(audioCtx.destination);
-      frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+    if (shouldCreateAudio) {
+      
       analyzer.getByteFrequencyData(frequencyData);
       // Print the analyzed frequencies
-      console.log("frequency data ", frequencyData);
+      console.log("Frequency data ", frequencyData);
+      audioIsPlaying = true;
+      shouldCreateAudio = false;
+
     }
 
-    // Get the visualizer container
-    const visualizerContainer = document.querySelector(".visualizer-container");
+    // // Get the visualizer container
+    visualizerContainer = document.querySelector(".visualizer-container");
     visualizerContainer.setAttribute('id', "visualizer-container-id");
-    
-    // Create a set of pre-defined bars
-    for (let i = 0; i < numberOfBars; i++) {
-      const bar = document.createElement("div");
-      bar.setAttribute("id", "bar" +i);
-      bar.setAttribute("class", "visualizer-container__bar");
-      visualizerContainer.appendChild(bar);
+
+    if (audioVisualsOn && shouldCreateVisuals) {
+
+      // Create a set of pre-defined bars
+      for (let i = 0; i < numberOfBars; i++) {
+
+        const bar = document.createElement("div");
+        bar.setAttribute("id", "bar" +i);
+        bar.setAttribute("class", "visualizer-container__bar");
+        visualizerContainer.appendChild(bar);
+
+      }
+      shouldCreateVisuals = false;
     }
 
-    // Adjust bar height according to frequency data
     function renderFrame() {
       
       if (audioVisualsOn) {
-      // Update frequency data array with the latest data
-      analyzer.getByteFrequencyData(frequencyData);
+        
+        // Update frequency data array with the latest data
+        analyzer.getByteFrequencyData(frequencyData);
 
         for (let i = 0; i < numberOfBars; i++) {
           // The frequency data array is 1024 digits in length, so it needs to be downsampled to 50
           const index = (i + 10) * 2;
           // fd is a frequency value between 0 and 255
           const fd = frequencyData[index];
-  
           // Fetch the bar DIV element
           const bar = document.querySelector("#bar" + i);
+
           if (!bar) {
             continue;
           }
-  
+
           const barHeight = Math.max(4, fd || 0); // Minimum height 4
           bar.style.height = barHeight + "px";
-          console.log("audiovisualizer");
+          console.log("Audiovisualizer");
+          if (!audioIsPlaying) {
+            audio.play();
+            audioIsPlaying = true;
+          }
         }
+        window.requestAnimationFrame(renderFrame);
       }
-      window.requestAnimationFrame(renderFrame);
+
+      if (!playButtonSelected) {
+
+        console.log("Audiovisual animation paused");
+        audio.pause();
+        audioIsPlaying = false;
+        audioVisualsOn = false;
+
+        if (playButtonSelected) {
+
+          renderFrame();
+
+        }
+      }   
     }
+
+    audio.addEventListener('ended', () => {
+
+      console.log("Audio has finished playing");
+      audioIsPlaying = false;
+      audioVisualsOn = false;
+      shouldCreateVisuals = false;
+      playButtonSelected = false;
+      return
+
+    });
 
     renderFrame();
 
     audio.volume = 0.50;
     audio.play();
-    audioIsPlaying = true;
   }
-
+  
   contentContainer.innerHTML = startContent;
   let currentContent;
 
@@ -353,12 +396,24 @@ document.addEventListener('DOMContentLoaded', function () {
         contentContainer.innerHTML = portfolioContent;
         break;
       case 'link5':
-        audioVisualsOn = true;
         event.preventDefault();
         contentContainer.innerHTML = audioVisualizerContent;
+        audioVisualsOn = true;
+        shouldCreateVisuals = true;
         break;
       case 'playAudio':
-        audio();
+        if (!audioIsPlaying) {
+          playButtonSelected = true;
+          audioVisualsOn = true;
+          audioVisuals();
+          audioIsPlaying = true;
+        }
+        break
+      case 'stopAudio':
+        playButtonSelected = false;
+        audioIsPlaying = false;
+        audioVisualsOn = false;
+        break
       case 'toggle_full_screen':
         break;
       case 'aboutthiswebsite':
@@ -376,17 +431,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // <p class="content">Something went wrong. Please try again.</p>
         // `
         contentContainer.innerHTML = contentContainer.innerHTML;
-        break;
+        break
     }
     console.log("content " + contentContainer.innerHTML);
 
-    // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
-    const fullScreenButtonNew = document.getElementById('toggle_full_screen');
-    if (fullScreenButtonNew) {
-      // Add or update the click event listener for the new full-screen button
-      fullScreenButtonNew.addEventListener('click', toggleFullScreen);
-    }
-    
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      // Mobile device
+    } else {
+      // Get a reference to the full-screen button with its new ID (reference is lost after uploading new content)
+      const fullScreenButtonNew = document.getElementById('toggle_full_screen');
+      if (fullScreenButtonNew) {
+        // Add or update the click event listener for the new full-screen button
+        fullScreenButtonNew.addEventListener('click', toggleFullScreen);
+      }
+    }    
   });
   
   function toggleFullScreen() {

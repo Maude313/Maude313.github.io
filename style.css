@@ -4,7 +4,7 @@
 
 }
 
-#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, #playAudio {
+#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, #audioButtons {
     animation: fadeInAnimation ease 3s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -47,7 +47,7 @@ html, body {
     text-decoration: inherit;
     color: inherit;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.5rem;
 
 }
 
@@ -62,7 +62,7 @@ html, body {
     text-align: center;
     text-shadow: 0 0 6em #ea76f0, 0 0 7em #7e7efa;
     color: gray;
-    font-size: 2rem; /* Adjust font size as needed */
+    font-size: 1.5rem; /* Adjust font size as needed */
 }
 
 .navbar {
@@ -72,19 +72,19 @@ html, body {
     width: 100%;
     /* background-color: #111; */
     padding: 1% 0.5%; /* Adjust the padding to control the spacing */
-    height: 10%;
+    height: 7%;
     display: flex;
     justify-content: space-between; /* Distribute space evenly between links */
     align-items: center; /* Vertically center the links */
     margin: 0 1%; /* Adjust the margin for spacing */
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
 }
 
 .navbar a {
     position: relative;
-    flex: 1;
+    /* flex: 1; */
     text-align: center;
-    padding: 1% 1%; /* Adjust the padding to control the spacing */
+    padding: 1% 3%; /* Adjust the padding to control the spacing */
     text-decoration: none;
 }
 
@@ -163,23 +163,45 @@ html, body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the text precisely */
+    transform: translate(-50%, -50%); /* Center the text precisely*/
     z-index: 0; /* Place the text above the background */
     text-align: center;
     font-size: 2rem;
 }
-
-#playAudio {
-    cursor: pointer;
-    position: absolute;
-    top: 40%;
-    left: 50%;
+.audioButtons {
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 0; /* Place the text above the background */
-    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: 35%;
+    /* background-color: #111; */
+    padding: 1% 0.5%; /*  Adjust the padding to control the spacing */
+    height: 4%;
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly between links */
+    align-items: center; /* Vertically center the links */
+    /* word-wrap: break-word; */
 }
 
+.audioButtons a {
+    position: relative;
+    /* flex: 1; */
+    text-align: center;
+    padding: 1% 3%; /* Adjust the padding to control the spacing */
+    text-decoration: none;
+}
+
+/* #playAudio {
+    transform: translate(-50%, -50%); Center the text precisely 
+}
+
+#stopAudio {
+    transform: translate(-50%, -50%); Center the text precisely 
+} */
+
 .visualizer-container {
+    pointer-events: none;
     position: absolute;
     bottom: 15%;
     right: 0%;
@@ -196,27 +218,40 @@ html, body {
     border: 1px solid #6df2c3;
     background: linear-gradient(to bottom, transparent 0%, rgb(222, 144, 248));
     margin: 0 0.1%;
-    width: 1.5%;
+    width: 1.1%;
     height: 200%;
 }
 
 /* Add a media query for smaller screens */
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 1000px) {
     .link {
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
     .currentpage {
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
     #aboutthiswebsite {
+        font-size: 1.5rem;
+    }
+    .header-text {
         font-size: 1.7rem;
+    }
+}
+@media screen and (max-width: 750px) {
+    .link {
+        font-size: 1rem;
+    }
+    .currentpage {
+        font-size: 1rem;
+    }
+    #aboutthiswebsite {
+        font-size: 1.5rem;
     }
     .header-text {
         font-size: 1.7rem;
     }
 }
 
-/* Add another media query for even smaller screens */
 @media screen and (max-width: 480px) {
     .visualizer-container__bar {
         overflow: hidden;
@@ -225,7 +260,7 @@ html, body {
         font-size: 1rem;
     }
     .currentpage {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
     #aboutthiswebsite {
         font-size: 1.4rem;

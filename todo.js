@@ -3,14 +3,14 @@
 // Ongelmia:
 // Gallerianäkymän cameraControls nykii
 // Back to start -button palaa välillä väärään paikkaan
-// Lisää play audio -buttoniin: ei voi käynnistää tuplasti visualisointeja, mahdollisuus lopettaa kuuntelu, ja jos musiikki jo soi ja palataan visualisointinäkymään, tulee visualisointi heti näkyville eikä tarvitse painaa play
+// Audio visualization: kun sivu avataan, pitäis tulla näkyviin visualisointipalikat
 
 
 
 
 
 // Lisättävää:
-// Play-/mute-button
+
 // Royalty free -kappaleita
 // Kuvia galleriaan
 // Minipeli
