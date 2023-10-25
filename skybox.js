@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
     visualizerContainer.setAttribute('id', "visualizer-container-id");
 
     if (audioVisualsOn && shouldCreateVisuals) {
-
+      console.log("if (audioVisualsOn && shouldCreateVisuals)");
       // Create a set of pre-defined bars
       for (let i = 0; i < numberOfBars; i++) {
 
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderFrame() {
       
-      if (audioVisualsOn) {
+      if (audioVisualsOn || audioIsPlaying) {
         
         // Update frequency data array with the latest data
         analyzer.getByteFrequencyData(frequencyData);
@@ -321,7 +321,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (!playButtonSelected) {
-
         console.log("Audiovisual animation paused");
         audio.pause();
         audioIsPlaying = false;
@@ -349,7 +348,9 @@ document.addEventListener('DOMContentLoaded', function () {
     renderFrame();
 
     audio.volume = 0.50;
-    audio.play();
+    if (playButtonSelected) {
+      audio.play();
+    }
   }
   
   contentContainer.innerHTML = startContent;
@@ -400,6 +401,9 @@ document.addEventListener('DOMContentLoaded', function () {
         contentContainer.innerHTML = audioVisualizerContent;
         audioVisualsOn = true;
         shouldCreateVisuals = true;
+ 
+        audioVisuals();
+
         break;
       case 'playAudio':
         if (!audioIsPlaying) {
