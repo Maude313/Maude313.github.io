@@ -1,4 +1,5 @@
 import CameraControls from '../camera-controls.module.js';
+// import MouseMeshInteraction from './three_mmi.js'
 
 document.addEventListener('DOMContentLoaded', function () {
   
@@ -30,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Create the sky sphere
   const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
   scene.add(skySphere);
+
+  // Mouse interactions for three.js objects
+  // const mmi = new MouseMeshInteraction(scene, camera);
 
   // Add lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -97,35 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   animateCamera();
-  
-
-  // function adjustBrightnessAndContrast(color, brightness, contrast) {
-  //   // Ensure brightness and contrast are within valid ranges
-  //   brightness = Math.max(-1, Math.min(1, brightness)); // Range: [-1, 1]
-  //   contrast = Math.max(0, contrast); // Range: [0, ∞)
-
-  //   // Adjust brightness
-  //   color.r += brightness;
-  //   color.g += brightness;
-  //   color.b += brightness;
-
-  //   // Adjust contrast
-  //   const midpoint = 0.5; // Midpoint gray (range: [0, 1])
-  //   color.r = (color.r - midpoint) * contrast + midpoint;
-  //   color.g = (color.g - midpoint) * contrast + midpoint;
-  //   color.b = (color.b - midpoint) * contrast + midpoint;
-
-  //   // Clamp RGB components to the valid range [0, 1]
-  //   color.r = Math.min(1, Math.max(0, color.r));
-  //   color.g = Math.min(1, Math.max(0, color.g));
-  //   color.b = Math.min(1, Math.max(0, color.b));
-
-  //   return color;
-  // }
-  // const originalEmissiveColor = new THREE.Color(0xff0000);
-
-  // // Adjusted emissive color with increased brightness and contrast
-  // const adjustedEmissiveColor = adjustBrightnessAndContrast(originalEmissiveColor, 0.2, 1.5);
 
   // Handle window resize
   window.addEventListener('resize', () => {
@@ -250,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
   // Initialize the audio context and analyzer
   var audioCtx = new AudioContext();
+  // Get the audio tag
   var audio = document.querySelector("audio");
   const audioSource = audioCtx.createMediaElementSource(audio);
   const analyzer = audioCtx.createAnalyser();
@@ -258,9 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
 
   function audioVisuals() {
-    
-    // Get the audio tag
-    const audio = document.querySelector("audio");
 
     if (shouldCreateAudio) {
       
@@ -409,8 +382,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!audioIsPlaying) {
           playButtonSelected = true;
           audioVisualsOn = true;
-          audioVisuals();
           audioIsPlaying = true;
+          audioVisuals();
         }
         break
       case 'stopAudio':
@@ -542,9 +515,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let image = null;
     
     imageUrls.forEach((url) => {      // Looping through the image urls and adding the loaded images to an array
-      index++;
+      // index++;
       image = imageLoader.load(url);
-      image.name = `image_${index}`;
+      // image.name = `image_${index}`;
       console.log(image.name);
       images.push(image);
     });
@@ -553,9 +526,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const imageMeshes = [];
     let imageMesh;
 
-    images.forEach((img) => {       // Looping through the images array and adding material and geometry to each image creating a mesh
+    images.forEach((img) => {       // Looping through the images array and adding material and geometry to each image creating a mesh (plus adding a name for mouse mesh interaction, mmi)
+      index++;
       let imageMaterial = new THREE.MeshBasicMaterial({ map: img });
       imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+      imageMesh.name = `imageMesh_${index}`;
       imageMeshes.push(imageMesh);
     });
 
@@ -581,128 +556,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log("images count " + images.length)
 
-//---------------option-1
-
-    // let imgContainer = document.querySelector('.imagecontainer');
-
-    // // Create and append an overlay element for each image
-    // imageUrls.forEach((url, index) => {
-    //   // Create a new div element for the overlay
-    //   let imageOverlay = document.createElement("div");
-      
-    //   // Add a class to style the overlay and to select it with querySelectorAll
-    //   imageOverlay.className = "image-overlay";
-      
-    //   // Set a unique ID for the overlay, you can use index or any other unique identifier
-    //   imageOverlay.id = `imageOverlay_${index}`;
-      
-    //   // Handle click events for each overlay
-    //   imageOverlay.addEventListener('click', () => {
-    //     switch (index) {
-    //       case 0:
-    //         alert("Image 1 clicked");
-    //         break;
-    //       case 1:
-    //         alert("Image 2 clicked");
-    //         break;
-    //       // Add more cases for other overlays
-    //     }
-    //   });
-      
-    //   // Append the overlay to the image container
-    //   imgContainer.appendChild(imageOverlay);
-    //   console.log(imgContainer);
-    // });
-
-    //------------------option 0
-
-    // imageOverlays.forEach((overlay, index) => {
-    //   overlay.addEventListener('click', () => {
-    //     // Handle the click event for each overlay
-    //     switch (index) {
-    //       case 0:
-    //         // Handle click for the first image overlay
-    //         break;
-    //       case 1:
-    //         // Handle click for the second image overlay
-    //         break;
-    //       // Add more cases for other overlays
-    //     }
-    //   });
-    // });
-
-
-//--------------option 1
-    // // Create a raycaster
-    // const raycaster = new THREE.Raycaster();
-
-    // // Add an event listener for mouse clicks
-    // renderer.domElement.addEventListener('click', onClick);
-
-    // function onClick(event) {
-    //   event.preventDefault();
-
-    //   // Calculate mouse position in normalized device coordinates
-    //   const mouse = new THREE.Vector2(
-    //     (event.clientX / window.innerWidth) * 2 - 1,
-    //     -(event.clientY / window.innerHeight) * 2 + 1
-    //   );
-
-    //   // Update the picking ray with the camera and mouse position
-    //   raycaster.setFromCamera(mouse, camera);
-
-    //   // Find intersections with your 3D objects (images)
-    //   const intersections = raycaster.intersectObjects(imageMeshes, true);
-
-    //   if (intersections.length > 0) {
-    //     // An intersection occurred; handle the click
-    //     const imageClicked = intersections[0].object;
-    //     const imageName = imageClicked.name; // Assign a unique name to each image
-    //     // Perform actions based on the image clicked
-    //     switch (imageName) {
-    //       case 'image_1':
-    //         alert("image 1 clicked");
-    //         break;
-    //       case 'image_2':
-    //         alert("image 2 clicked");
-    //         break;
-    //       // Add more cases for other images
-    //     }
-    //   }
-    // }
-//-------------------------option2
-    // images.forEach((image) => {
-
-    //   document.body.appendChild(image);
-
-    //   image.addEventListener('click', (event) => {
-
-    //     const imageName = event.target.name;
-    
-    //     switch (imageName) {
-    //       case 'image_1':
-    //         alert('Image 1 clicked');
-    //         break;
-    //       case 'image_2':
-    //         alert('Image 2 clicked');
-    //         break;
-    //       case 'image_3':
-    //         alert("image 3");
-    //         break
-    //       case 'image_4':
-    //         alert("image 4");
-    //         break
-    //       case 'image_5':
-    //         alert("image 5");
-    //         break
-    //       case 'image_6':
-    //         alert("image 6");
-    //         break
-    //     }
-    //   });
-    // });    
   }
-
+  // create a handler for when user clicks on a mesh with the name 'my_interactable_mesh'
+  // mmi.addHandler('imageMesh_${index}', 'dblclick', function(mesh) {
+  //   console.log('image has been clicked!');
+  //   console.log(mesh);
+  // });
   // Function to change the background image
   function changeBackgroundImage(imageUrl) {
     // Load the new texture
