@@ -3,8 +3,6 @@
 // Ongelmia:
 // Gallerianäkymän cameraControls nykii
 // Back to start -button palaa välillä väärään paikkaan
-// Audio visualization: kun sivu avataan, pitäis tulla näkyviin visualisointipalikat
-// Audio visualization: kun sivu avataan audion ollessa käynnissä, ei visualisointi ala ellei eka paina pause
 
 
 

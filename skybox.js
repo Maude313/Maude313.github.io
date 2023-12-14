@@ -1,4 +1,7 @@
-import CameraControls from '../camera-controls.module.js';
+// import CameraControls from '../camera-controls.module.js';
+import * as THREE from 'three';
+import CameraControls from 'camera-controls';
+
 // import MouseMeshInteraction from './three_mmi.js'
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -136,13 +139,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const startContent = `
   <h1 class="header-text" id="header-text">You must first fail to reach your ultimate goal</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <h2 id="aboutthiswebsite">This interstellar spacecraft is under construction<br><br>Come back later</h2>
+  <h2 id="aboutthiswebsite"><br><br></h2>
   <div class="navbar">
     <a class="currentpage" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
     <a class="link" id="link1">About this website</a>
-    <a class="link" id="link4">Portfolio</a>
+    <a class="link" id="link4">About the author</a>
   </div>
   `;
   const galleryContent = `
@@ -155,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="currentpage" id="link2">Gallery</a>
     <a class="link" id="link1">About this website</a>
-    <a class="link" id="link4">Portfolio</a>
+    <a class="link" id="link4">About the author</a>
   </div>
   `;
   const aboutContent = `
@@ -169,11 +172,23 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
     <a class="currentpage" id="link1">About this website</a>
-    <a class="link" id="link4">Portfolio</a>
+    <a class="link" id="link4">About the author</a>
   </div>
   `;
+  // const portfolioContent = `
+  // <h1 class="header-text" id="header-text">Portfolio</h1>
+  // <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  // <h2 id="aboutthiswebsite">There will be content later</h2>
+  // <div class="navbar">
+  //   <a class="link" id="link3">Back to start</a>
+  //   <a class="link" id="link5">Audio Visualizer</a>
+  //   <a class="link" id="link2">Gallery</a>
+  //   <a class="link" id="link1">About this website</a>
+  //   <a class="currentpage" id="link4">Portfolio</a>
+  // </div>
+  // `;
   const portfolioContent = `
-  <h1 class="header-text" id="header-text">Portfolio</h1>
+  <h1 class="header-text" id="header-text">About the author</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <h2 id="aboutthiswebsite">There will be content later</h2>
   <div class="navbar">
@@ -181,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
     <a class="link" id="link1">About this website</a>
-    <a class="currentpage" id="link4">Portfolio</a>
+    <a class="currentpage" id="link4">About the author</a>
   </div>
   `;
   const audioVisualizerContent = `
@@ -224,9 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const numberOfBars = 50;
   
   // Initialize the audio context and analyzer
-  var audioCtx = new AudioContext();
+  const audioCtx = new AudioContext();
   // Get the audio tag
-  var audio = document.querySelector("audio");
+  const audio = document.querySelector("audio");
   const audioSource = audioCtx.createMediaElementSource(audio);
   const analyzer = audioCtx.createAnalyser();
   audioSource.connect(analyzer);
@@ -286,8 +301,10 @@ document.addEventListener('DOMContentLoaded', function () {
           bar.style.height = barHeight + "px";
           console.log("Audiovisualizer");
           if (!audioIsPlaying) {
-            audio.play();
-            audioIsPlaying = true;
+            audioCtx.resume().then(() => {
+              audio.play();
+              audioIsPlaying = true;
+            });
           }
         }
         window.requestAnimationFrame(renderFrame);

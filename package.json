@@ -3,5 +3,28 @@
     "camera-controls": "^2.7.2",
     "three": "^0.156.1",
     "tween.js": "^16.6.0"
-  }
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "name": "3dwebpage",
+  "description": "",
+  "version": "1.0.0",
+  "main": "camera-controls.module.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Maude313: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@github.com/Maude313/3DWebPage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maude313/3DWebPage/issues"
+  },
+  "homepage": "https://github.com/Maude313/3DWebPage#readme"
 }

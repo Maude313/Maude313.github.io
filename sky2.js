@@ -212,24 +212,24 @@ document.addEventListener('DOMContentLoaded', function () {
           e.preventDefault();
         };
       
-        if ( !isMobile ) {    
+        // if ( !isMobile ) {    
       
-          canvas.addEventListener( 'mousemove', mouseMoveHandler );
-          canvas.addEventListener( 'mousedown', mouseDownHandler );
-          canvas.addEventListener( 'mouseup', mouseUpHandler );
-          canvas.addEventListener( 'mouseenter', mouseEnterHandler ); 
-          canvas.addEventListener( 'mouseleave', mouseLeaveHandler ); 
+        //   canvas.addEventListener( 'mousemove', mouseMoveHandler );
+        //   canvas.addEventListener( 'mousedown', mouseDownHandler );
+        //   canvas.addEventListener( 'mouseup', mouseUpHandler );
+        //   canvas.addEventListener( 'mouseenter', mouseEnterHandler ); 
+        //   canvas.addEventListener( 'mouseleave', mouseLeaveHandler ); 
       
-          $( canvas ).css( 'cursor', 'pointer' );
+        //   $( canvas ).css( 'cursor', 'pointer' );
       
-        } else {
+        // } else {
       
-          canvas.addEventListener( 'touchstart', touchStartHandler, false );
-          canvas.addEventListener( 'touchend', touchEndHandler, false );
-          canvas.addEventListener( 'touchmove', touchMoveHandler, false );
-          canvas.addEventListener( 'touchcancel', touchCancelHandler, false );
+        //   canvas.addEventListener( 'touchstart', touchStartHandler, false );
+        //   canvas.addEventListener( 'touchend', touchEndHandler, false );
+        //   canvas.addEventListener( 'touchmove', touchMoveHandler, false );
+        //   canvas.addEventListener( 'touchcancel', touchCancelHandler, false );
       
-        }
+        // }
       
         document.getElementById( 'effect' ).appendChild( canvas );
       
