@@ -1,4 +1,3 @@
-// import CameraControls from '../camera-controls.module.js';
 import * as THREE from 'three';
 import CameraControls from 'camera-controls';
 
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
   cameraControls.enableZoom = false;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
-  let skyTexture = textureLoader.load('sky4.jpg'); // jpg image for the background, the skybox image
+  let skyTexture = textureLoader.load('sky4.1.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
   const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
@@ -164,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const aboutContent = `
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
-      Three.js, a 3D JavaScript library and my imagination.<br>The font is from fontlibrary.org.<br>
-      The warp drive effect is copied and edited from https://codepen.io/NiklasKnaack/pen/OmwgKb.<br>
+      Three.js, a 3D JavaScript library and my imagination.<br>The font is from <a target="_blank" href="https://fontlibrary.org/">fontlibrary.org</a>.<br>
+      The warp drive effect is copied and edited from <a target="_blank" href="https://codepen.io/NiklasKnaack/pen/OmwgKb">codepen.io/NiklasKnaack/pen/OmwgKb</a>.<br>
       You can look around by left clicking and dragging with the mouse.</h2>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
@@ -206,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a id="playAudio" class="link">Play Audio</a>
     <a id="stopAudio" class="link">Pause Audio</a>
   </div>
-  <h2 id="aboutthiswebsite">Chopin - Nocturne Op. 9 No. 2 (E Flat Major)</h2>
+  <h2 id="aboutthiswebsite">Wisdom in the Sun - Written by Kevin MacLeod<br><br>This music is available for commercial and non-commercial purposes. <a target=”_blank” href="https://freepd.com">freepd.com/</a></h2>
   <div class="visualizer-container"></div>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
@@ -507,11 +506,11 @@ document.addEventListener('DOMContentLoaded', function () {
       // After both complex transition and warp animation are complete, load the gallery content
       animationPromise.then(() => {
         contentContainer.innerHTML = galleryContent;
-        skyTexture = textureLoader.load('sky5.jpg');
+        skyTexture = textureLoader.load('sky5.1.jpg');
       });
     } else {
       contentContainer.innerHTML = galleryContent;
-      skyTexture = textureLoader.load('sky5.jpg');
+      skyTexture = textureLoader.load('sky5.1.jpg');
     }
   }
   
@@ -519,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function () {
     warpEnded = true;
     console.log("WARP ENDED: " + warpEnded);
     contentContainer.innerHTML = galleryContent;
-    changeBackgroundImage('sky5.jpg');
+    changeBackgroundImage('sky5.1.jpg');
     // cameraControls.zoom(1, false);
     cameraControls.reset();
 

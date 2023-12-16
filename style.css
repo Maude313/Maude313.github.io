@@ -4,7 +4,7 @@
 
 }
 
-#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, #audioButtons {
+#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, .audioButtons {
     animation: fadeInAnimation ease 3s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -48,9 +48,11 @@ html, body {
     color: inherit;
     cursor: pointer;
     font-size: 1.5rem;
-
 }
 
+a {
+    color: inherit;
+}
 .currentpage {
     z-index: 1; /* Place the text above the background */
     position: absolute;
@@ -92,25 +94,6 @@ html, body {
     color: #fff;
 }
 
-/* #link1 {
-    bottom: 3%;
-}
-
-#link2 {
-    bottom: 3%;
-}
-
-#link3 {
-    bottom: 3%;
-}
-
-#link4 {
-    bottom: 3%;
-}
-#link5 {
-    bottom: 3%;
-} */
-
 #toggle_full_screen{
     cursor: pointer;
     position: absolute; /* Position the text element */
@@ -131,7 +114,6 @@ html, body {
     font-weight: bold;
     text-align: center;
     text-shadow: 0 0 6px #f200ff, 0 0 7px #0000FF;
-
  }
 
  /* Change the background and text color of the selected (pasted) text */
@@ -173,7 +155,7 @@ html, body {
     z-index: 0; /* Place the text above the background */
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 30%;
     width: 35%;
     /* background-color: #111; */
     padding: 1% 0.5%; /*  Adjust the padding to control the spacing */
@@ -191,14 +173,6 @@ html, body {
     padding: 1% 3%; /* Adjust the padding to control the spacing */
     text-decoration: none;
 }
-
-/* #playAudio {
-    transform: translate(-50%, -50%); Center the text precisely 
-}
-
-#stopAudio {
-    transform: translate(-50%, -50%); Center the text precisely 
-} */
 
 .visualizer-container {
     pointer-events: none;

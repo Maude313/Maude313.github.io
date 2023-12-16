@@ -11,14 +11,15 @@
   "name": "3dwebpage",
   "description": "",
   "version": "1.0.0",
-  "main": "camera-controls.module.js",
+  "main": "skybox.js",
+  "private": true,
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://Maude313: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@github.com/Maude313/3DWebPage.git"
+    "url": "git+https://Maude313@github.com/Maude313/3DWebPage.git"
   },
   "keywords": [],
   "author": "",
@@ -28,3 +29,4 @@
   },
   "homepage": "https://github.com/Maude313/3DWebPage#readme"
 }
+
