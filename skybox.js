@@ -236,18 +236,24 @@ document.addEventListener('DOMContentLoaded', function () {
   let visualizerContainer;
   const numberOfBars = 50;
   
-  // Initialize the audio context and analyzer
-  const audioCtx = new AudioContext();
-  // Get the audio tag
-  const audio = document.querySelector("audio");
-  const audioSource = audioCtx.createMediaElementSource(audio);
-  const analyzer = audioCtx.createAnalyser();
-  audioSource.connect(analyzer);
-  audioSource.connect(audioCtx.destination);
-  const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+  
+  let audioSource = null;
+  let analyzer = null;
 
   function audioVisuals() {
+    // Initialize the audio context and analyzer
+    const audioCtx = new AudioContext();
+    // Get the audio tag
+    const audio = document.querySelector("audio");
+    if (!audioSource) {
+      audioSource = audioCtx.createMediaElementSource(audio);
+      analyzer = audioCtx.createAnalyser();
+      audioSource.connect(analyzer);
+      audioSource.connect(audioCtx.destination);
+    }
 
+    const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+    
     if (shouldCreateAudio) {
       
       analyzer.getByteFrequencyData(frequencyData);
@@ -263,7 +269,6 @@ document.addEventListener('DOMContentLoaded', function () {
     visualizerContainer.setAttribute('id', "visualizer-container-id");
 
     if (audioVisualsOn && shouldCreateVisuals) {
-      console.log("if (audioVisualsOn && shouldCreateVisuals)");
       // Create a set of pre-defined bars
       for (let i = 0; i < numberOfBars; i++) {
 
@@ -297,7 +302,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
           const barHeight = Math.max(4, fd || 0); // Minimum height 4
           bar.style.height = barHeight + "px";
-          console.log("Audiovisualizer");
           if (!audioIsPlaying) {
             audioCtx.resume().then(() => {
               audio.play();
