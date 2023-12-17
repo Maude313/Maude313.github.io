@@ -80,11 +80,11 @@ a {
 
 .navbar {
     position: absolute;
-    /* left: 1%;
-    right: 3%; */
+    /* left: 1%; */
+    right: 5%;
     bottom: 3%;
     width: 100%;
-    padding: 3% 5%;
+    padding: 3% 3%;
     height: 7%;
     display: flex;
     justify-content: space-between; /* Distribute space evenly between links */

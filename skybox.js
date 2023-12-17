@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let enableTransition = cameraControls.enableTransition = true;
   let warpEnded = true;
   let warpInProcess = false;;
-  console.log("WARP ENDED: " + warpEnded);
 
   skyTexture.onload = function() {
     // Once the image is loaded, add the 'loaded' class to trigger the fade-in effect
@@ -69,12 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const delta = clock.getDelta();
     const hasControlsUpdated = cameraControls.update(delta);
     
-    requestAnimationFrame(animateCamera);    
+    requestAnimationFrame(animateCamera);
+
     if (hasControlsUpdated) {
-
       renderer.render(scene, camera);
-      console.log("animate camera on")
-
     } else {    //Rotate the background sphere back and forth to create a "space craft hovering in the air" effect
 
       if (warpEnded) {
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         renderer.render(scene, camera);
-        console.log("hover animation called")
       }
     }
   };
@@ -165,7 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
   <h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
       Three.js, a 3D JavaScript library and my imagination.<br>The font is from <a target="_blank" href="https://fontlibrary.org/">fontlibrary.org</a>.<br>
       The warp drive effect is copied and edited from <a target="_blank" href="https://codepen.io/NiklasKnaack/pen/OmwgKb">codepen.io/NiklasKnaack/pen/OmwgKb</a>.<br>
-      You can look around by left clicking and dragging with the mouse.</h2>
+      You can look around by left clicking and dragging with the mouse.
+  </h2>
+  <p id="viewport"></p>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
@@ -913,7 +911,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             else {
               canvas.remove();
-              console.log("canvas removed");
               // warpInProcess = false;
               loadGalleryContent();
               return
@@ -1086,9 +1083,9 @@ document.addEventListener('DOMContentLoaded', function () {
     warpInProcess = false;
     console.log('warpInProcess ' + warpInProcess);
   }
-});
-
-
-
+  
+  
   //-----------------------------end of WARP--------------------------------
 
+
+});
