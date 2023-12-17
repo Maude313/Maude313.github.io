@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
   cameraControls.enableZoom = false;
   // Load skybox textures
   const textureLoader = new THREE.TextureLoader();
-  let skyTexture = textureLoader.load('sky4.1.jpg'); // jpg image for the background, the skybox image
+  let skyTexture = textureLoader.load('images/sky4.1.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
   const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // Adjust the sphere size and detail as needed
   // Create a material with the sky texture
@@ -221,10 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const puzzleContent = `
   
   `;
-  // <a id="playAudio" class="link">Play Audio</a>
-  // <h2 id="aboutthiswebsite">Chopin - Nocturne Op.9 No.2 (E Flat Major)</h2>
 
-  // const playButton = document.getElementById("playAudio");
+  // Audio visuals: License MIT, Author Special Agent Squeaky (specialagentsqueaky.com).
+  // Modified by myself to fit my purposes.
 
   let audioIsPlaying = false;
   let audioVisualsOn = false;
@@ -506,11 +505,11 @@ document.addEventListener('DOMContentLoaded', function () {
       // After both complex transition and warp animation are complete, load the gallery content
       animationPromise.then(() => {
         contentContainer.innerHTML = galleryContent;
-        skyTexture = textureLoader.load('sky5.1.jpg');
+        skyTexture = textureLoader.load('images/sky5.1.jpg');
       });
     } else {
       contentContainer.innerHTML = galleryContent;
-      skyTexture = textureLoader.load('sky5.1.jpg');
+      skyTexture = textureLoader.load('images/sky5.1.jpg');
     }
   }
   
@@ -518,13 +517,13 @@ document.addEventListener('DOMContentLoaded', function () {
     warpEnded = true;
     console.log("WARP ENDED: " + warpEnded);
     contentContainer.innerHTML = galleryContent;
-    changeBackgroundImage('sky5.1.jpg');
+    changeBackgroundImage('images/sky5.1.jpg');
     // cameraControls.zoom(1, false);
     cameraControls.reset();
 
     // Add images
     const imageLoader = new THREE.TextureLoader();
-    const imageUrls = ['sky3.jpg', 'sky5.jpg', 'sky6.jpg', 'sky2.jpg', 'sky4.jpg', 'sky7.jpg']; //When adding new images, add the filenames here
+    const imageUrls = ['images/sky3.jpg', 'images/sky5.jpg', 'images/sky6.jpg', 'images/sky2.jpg', 'images/sky4.jpg', 'images/sky7.jpg']; //When adding new images, add the filenames here
     const images = [];
     
     let index = 0;
