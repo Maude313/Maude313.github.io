@@ -2,7 +2,7 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-mode: "development", //"production"
+mode: "production", //"development"
   entry: './skybox.js',
   output: {
     filename: 'build.js',
