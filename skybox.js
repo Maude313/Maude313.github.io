@@ -201,12 +201,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const audioVisualizerContent = `
   <h1 class="header-text" id="header-text">Audio Visualizer</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <div class="audioButtons">
-    <a id="playAudio" class="link">Play Audio</a>
-    <a id="stopAudio" class="link">Pause Audio</a>
+  <div class="audiovisualizer-content">
+    <div class="audiovisualizer-text">
+      <h2 id="audiovisualizer-text">This music is available for commercial and non-commercial purposes. <a target=”_blank” href="https://freepd.com">freepd.com/</a></h2><br>
+      <h2 id="audiovisualizer-title">Wisdom in the Sun - Written by Kevin MacLeod<br></h2>
+    </div>
+    <div class="audioButtons">
+      <a id="playAudio" class="link">Play Audio</a>
+      <a id="stopAudio" class="link">Pause Audio</a>
+    </div>
+    <div class="visualizer-container"></div>
   </div>
-  <h2 id="aboutthiswebsite">Wisdom in the Sun - Written by Kevin MacLeod<br><br>This music is available for commercial and non-commercial purposes. <a target=”_blank” href="https://freepd.com">freepd.com/</a></h2>
-  <div class="visualizer-container"></div>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
     <a class="currentpage" id="link5">Audio Visualizer</a>
@@ -230,9 +235,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let playButtonSelected = false;
   let shouldCreateVisuals = true;
   let shouldCreateAudio = true;
-  // let audioSource;
-  // let analyzer;
-  // let frequencyData;
   let visualizerContainer;
   const numberOfBars = 50;
   
@@ -253,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-    
+
     if (shouldCreateAudio) {
       
       analyzer.getByteFrequencyData(frequencyData);

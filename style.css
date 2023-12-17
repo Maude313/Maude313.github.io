@@ -1,7 +1,7 @@
 
 #scene-container {
     position: absolute; /* Create a positioning context for child elements */
-
+    
 }
 
 #aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, .audioButtons {
@@ -24,6 +24,17 @@ html, body {
     padding: 0;
 }
 
+.content {
+    font-family: 'XoloniumRegular';
+    font-weight: normal;
+    font-style: normal;
+    color: rgb(103, 248, 233);
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 6px #f200ff, 0 0 7px #0000FF;
+    max-width: 100%;
+ }
+
 /* Hide scrollbars in fullscreen mode */
 :-webkit-full-screen {
     overflow: hidden;
@@ -36,7 +47,7 @@ html, body {
 :-ms-fullscreen {
     overflow: hidden;
 }
-  
+
 :fullscreen {
     overflow: hidden;
 }
@@ -69,24 +80,24 @@ a {
 
 .navbar {
     position: absolute;
-    left: 0;
-    bottom: 0;
+    /* left: 1%;
+    right: 3%; */
+    bottom: 3%;
     width: 100%;
-    /* background-color: #111; */
-    padding: 1% 0.5%; /* Adjust the padding to control the spacing */
+    padding: 3% 5%;
     height: 7%;
     display: flex;
     justify-content: space-between; /* Distribute space evenly between links */
     align-items: center; /* Vertically center the links */
-    margin: 0 1%; /* Adjust the margin for spacing */
-    /* word-wrap: break-word; */
+    margin: 0 1%;
+    max-width: 100%;
 }
 
 .navbar a {
     position: relative;
     /* flex: 1; */
     text-align: center;
-    padding: 1% 3%; /* Adjust the padding to control the spacing */
+    padding: 1% 3%;
     text-decoration: none;
 }
 
@@ -106,15 +117,6 @@ a {
 .toggle_full_screen:hover{
     color: #fff;
 }
-.content {
-    font-family: 'XoloniumRegular';
-    font-weight: normal;
-    font-style: normal;
-    color: rgb(103, 248, 233);
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 0 0 6px #f200ff, 0 0 7px #0000FF;
- }
 
  /* Change the background and text color of the selected (pasted) text */
 ::selection {
@@ -143,19 +145,37 @@ a {
 
 #aboutthiswebsite {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%); /* Center the text precisely*/
     z-index: 0; /* Place the text above the background */
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.7rem;
+}
+.audiovisualizer-content {
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly between links */
+}
+.audiovisualizer-text {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the text precisely*/
+    z-index: 0; /* Place the text above the background */
+    text-align: center;
+}
+#audiovisualizer-text {
+    font-size: 1.2rem;
+}
+#audiovisualizer-title {
+    font-size: 1.5rem;
 }
 .audioButtons {
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 0; /* Place the text above the background */
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 50%;
     width: 35%;
     /* background-color: #111; */
     padding: 1% 0.5%; /*  Adjust the padding to control the spacing */
@@ -210,6 +230,9 @@ a {
     .header-text {
         font-size: 1.7rem;
     }
+    #toggle_full_screen {
+        display: none; /* Hide the button */
+    }
 }
 @media screen and (max-width: 750px) {
     .link {
@@ -219,10 +242,22 @@ a {
         font-size: 1rem;
     }
     #aboutthiswebsite {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+    }
+    #audiovisualizer-text {
+        font-size: 1rem;
+    }
+    #audiovisualizer-title {
+        font-size: 1.2rem;
     }
     .header-text {
-        font-size: 1.7rem;
+        font-size: 1.4rem;
+    }
+    .navbar {
+        padding: 4% 4%;
+    }
+    #toggle_full_screen {
+        display: none; /* Hide the button */
     }
 }
 
@@ -237,27 +272,24 @@ a {
         font-size: 0.8rem;
     }
     #aboutthiswebsite {
-        font-size: 1.2rem;
+        font-size: 1rem;
+    }
+    #audiovisualizer-text {
+        font-size: 1rem;
+    }
+    #audiovisualizer-title {
+        font-size: 1.1rem;
     }
     .header-text {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+    }
+    .navbar {
+        padding: 4% 4%;
+    }
+    #toggle_full_screen {
+        display: none; /* Hide the button */
     }
 }
-/* div {
-  transform: scaleX(1.5);
-} */
-/* Keyframes for animation */
-/* @keyframes colorFade {
-    0% {
-        background: radial-gradient(transparent);
-    }
-    50% {
-        background: radial-gradient(circle, rgb(255, 0, 200), transparent);
-    }
-    100% {
-        background: radial-gradient(transparent);
-    } */
-/* } */
 
 .image-overlay {
     position: absolute;
