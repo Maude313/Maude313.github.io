@@ -4,7 +4,7 @@
     
 }
 
-#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, .audioButtons {
+#aboutthiswebsite, #fade-in-content, #header-text, .fade-in-content, .visualizer-container__bar, .audioButtons, .audiovisualizer-content {
     animation: fadeInAnimation ease 3s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
