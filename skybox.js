@@ -180,7 +180,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const portfolioContent = `
   <h1 class="header-text" id="header-text">About the author</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <h2 id="aboutthiswebsite"><br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!
+  <div class="placeholder">
+    <!-- blurred background image 1 for blurred edge -->
+    <img src="images/PgConnectsHelsinki2.jpg" alt="Maude313blur" class="author-image-blur"></img>
+    <!-- blurred background image 2 for blurred edge -->
+    <img src="images/PgConnectsHelsinki2.jpg" alt="Maude313blur" class="author-image-blur2"></img>
+    <!-- same image, no blur -->
+    <img src="images/PgConnectsHelsinki2.jpg" alt="Maude313" class="author-image"></img>
+  </div>
+  <h2 id="aboutthiswebsite"><br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA Finland's hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!<br><br>Last update January 10th 2024
   </h2>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
