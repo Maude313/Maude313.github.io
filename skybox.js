@@ -15,23 +15,16 @@ document.addEventListener('DOMContentLoaded', function () {
   renderer.setPixelRatio(window.devicePixelRatio);
   document.body.appendChild(renderer.domElement);
   const cameraControls = new CameraControls(camera, renderer.domElement);
-  // Create a scene
-  const scene = new THREE.Scene();
+  const scene = new THREE.Scene();    // Create a scene
   const clock = new THREE.Clock();
   document.getElementById('scene_container').appendChild(renderer.domElement);
-  // const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  // controls.enableZoom = false;
   cameraControls.enableZoom = false;
-  // Load skybox textures
-  const textureLoader = new THREE.TextureLoader();
+  const textureLoader = new THREE.TextureLoader();    // Load skybox textures
   let skyTexture = textureLoader.load('images/sky4.1.jpg'); // jpg image for the background, the skybox image
   // Create a sphere geometry
   const sphereGeometry = new THREE.SphereGeometry(2, 32, 32); // Adjust the sphere size and detail as needed
-  // Create a material with the sky texture
-  const sphereMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
-  // sphereMaterial.map.minFilter = THREE.LinearFilter;
-  // Create the sky sphere
-  const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  const sphereMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });    // Create a material with the sky texture
+  const skySphere = new THREE.Mesh(sphereGeometry, sphereMaterial);   // Create the sky sphere
   scene.add(skySphere);
 
   // Mouse interactions for three.js objects
@@ -187,7 +180,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const portfolioContent = `
   <h1 class="header-text" id="header-text">About the author</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <h2 id="aboutthiswebsite">There will be content later</h2>
+  <h2 id="aboutthiswebsite"><br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!
+  </h2>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
@@ -423,9 +417,6 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         break
       default:
-        // contentContainer.innerHTML = `
-        // <p class="content">Something went wrong. Please try again.</p>
-        // `
         contentContainer.innerHTML = contentContainer.innerHTML;
         break
     }
@@ -506,14 +497,11 @@ document.addEventListener('DOMContentLoaded', function () {
         
       });
       
-      // After both complex transition and warp animation are complete, load the gallery content
-      animationPromise.then(() => {
-        contentContainer.innerHTML = galleryContent;
-        skyTexture = textureLoader.load('images/sky5.1.jpg');
-      });
-    } else {
-      contentContainer.innerHTML = galleryContent;
-      skyTexture = textureLoader.load('images/sky5.1.jpg');
+      // // After both complex transition and warp animation are complete, load the gallery content
+      // animationPromise.then(() => {
+      //   contentContainer.innerHTML = galleryContent;
+      //   // skyTexture = textureLoader.load('images/sky5.1.jpg');
+      // });
     }
   }
   
@@ -522,7 +510,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("WARP ENDED: " + warpEnded);
     contentContainer.innerHTML = galleryContent;
     changeBackgroundImage('images/sky5.1.jpg');
-    // cameraControls.zoom(1, false);
     cameraControls.reset();
 
     // Add images
@@ -534,7 +521,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let image = null;
     
     imageUrls.forEach((url) => {      // Looping through the image urls and adding the loaded images to an array
-      // index++;
       image = imageLoader.load(url);
       // image.name = `image_${index}`;
       console.log(image.name);
@@ -576,11 +562,13 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("images count " + images.length)
 
   }
+
   // create a handler for when user clicks on a mesh with the name 'my_interactable_mesh'
   // mmi.addHandler('imageMesh_${index}', 'dblclick', function(mesh) {
   //   console.log('image has been clicked!');
   //   console.log(mesh);
   // });
+
   // Function to change the background image
   function changeBackgroundImage(imageUrl) {
     // Load the new texture
@@ -590,16 +578,18 @@ document.addEventListener('DOMContentLoaded', function () {
       // Once the image is loaded, add the 'loaded' class to trigger the fade-in effect
       newSkyTexture.classList.add('fade-in-content');
     };
+
     skyTexture = newSkyTexture;
+
     // Update the material's map property
     sphereMaterial.map = skyTexture;
     sphereMaterial.needsUpdate = true;
+
     // Remove the old texture from memory (optional)
     // skyTexture.dispose();
-
-    // Update the skyTexture reference
-
   }
+
+
 
   //-----------------------------WARP----------------------------
  // Code for warp drive is copied and modified, original: https://codepen.io/NiklasKnaack/pen/OmwgKb
@@ -794,21 +784,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var colorValue;
         var particle;
 
-        // for ( i = 0; i < starHolderCount / 3; i++ ) {
-
-        //   x = Math.random() * 24000 - 12000;
-        //   y = Math.random() * 4500 - 2250;
-        //   z = Math.round( Math.random() * starDistance );//Math.random() * 700 - 350;
-
-        //   colorValue = Math.floor( Math.random() * 255 ) + 5;
-
-        //   particle = addParticle( x, y, z, x, y, z );
-        //   particle.color = { r:colorValue, g:colorValue, b:colorValue, a:255 };
-
-        //   starBgHolder.push( particle );
-
-        // }
-
         for ( i = 0; i < starHolderCount; i++ ) {
 
           x = Math.random() * 10000 - 5000;
@@ -874,7 +849,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var star;
         var scale;
 
-        //Here's some of my modifications to animate the warp to fit my purpose
+        //Here's some of my modifications to animate the warp to fit my purpose -----------------------------
 
         // Get the animation start time
         var animationStartTime = null;
@@ -884,7 +859,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log("starspeed: " + starSpeed);
   
           // Set the animation duration in milliseconds
-          var animationDuration = 3000; // Adjust this value as needed
+          var animationDuration = 3000;
           
           if (!animationStartTime) {
             animationStartTime = Date.now();
@@ -926,23 +901,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
           //End of my part
 
-        // if ( !mouseActive ) {
-
-        //   fov += 0.5;
-
-        //   if ( fov > fovMax )
-        //     fov = fovMax;
-
-        // } else {
-
-        //   fov -= 1;
-
-        //   if ( fov < fovMin )
-        //     fov = fovMin;
-
-        // }
-
-        //---
 
         var warpSpeedValue;
 
@@ -955,28 +913,6 @@ document.addEventListener('DOMContentLoaded', function () {
           warpSpeedValue = starSpeed * ( starSpeed / ( starSpeedMax / 2 ) );
 
         }
-
-        //---
-
-        // for ( i = 0, l = starBgHolder.length; i < l; i++ ) {
-
-        //   star = starBgHolder[ i ];
-
-        //   scale = fov / ( fov + star.z ); 
-
-        //   star.x2d = ( star.x * scale ) + center.x; 
-        //   star.y2d = ( star.y * scale ) + center.y; 
-
-        //   if ( star.x2d > 0 && star.x2d < canvasWidth && star.y2d > 0 && star.y2d < canvasHeight ) {
-
-        //     setPixel( star.x2d | 0, star.y2d | 0, star.color.r, star.color.g, star.color.b, 255 );
-
-        //   }
-
-
-        // }
-
-        //---
 
         for ( i = 0, l = starHolder.length; i < l; i++ ) {
 
@@ -1032,44 +968,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
           }
 
-          // if ( mouseDown ) {
-
-          //   //rotation
-          //   var radians = MATHPI180 * starRotation;
-
-          //   var cos = Math.cos( radians );
-          //   var sin = Math.sin( radians );
-
-          //   star.x = ( cos * ( star.ox - center.x ) ) + ( sin * ( star.oy - center.y ) ) + center.x,
-          //     star.y = ( cos * ( star.oy - center.y ) ) - ( sin * ( star.ox - center.x ) ) + center.y;
-
-          // }
-
         }
 
         //---
 
         ctx.putImageData( imageData, 0, 0 );
 
-        //---
-
-        // if ( mouseActive ) {
-
-        //   center.x += ( mousePos.x - center.x ) * 0.015;
-
-        // } else {
-
-        //   center.x += ( ( canvas.width / 2 ) - center.x ) * 0.015;
-
-        // }
-
-        // //---
-
-        // if ( mouseDown ) {
-
-        //   starRotation -= 0.5;
-
-        // }
 
       };
 
