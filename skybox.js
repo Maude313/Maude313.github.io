@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <h2 id="aboutthiswebsite">This page is created by using an AI skybox tool by Blockade Labs,<br>
       Three.js, a 3D JavaScript library and my imagination.<br>The font is from <a target="_blank" href="https://fontlibrary.org/">fontlibrary.org</a>.<br>
       The warp drive effect is copied and edited from <a target="_blank" href="https://codepen.io/NiklasKnaack/pen/OmwgKb">codepen.io/NiklasKnaack/pen/OmwgKb</a>.<br>
-      You can look around by left clicking and dragging with the mouse.
+      You can look around by left clicking and dragging with the mouse, or in the case of a touch screen use your finger.
   </h2>
   <p id="viewport"></p>
   <div class="navbar">
@@ -165,18 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link4">About the author</a>
   </div>
   `;
-  // const portfolioContent = `
-  // <h1 class="header-text" id="header-text">Portfolio</h1>
-  // <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  // <h2 id="aboutthiswebsite">There will be content later</h2>
-  // <div class="navbar">
-  //   <a class="link" id="link3">Back to start</a>
-  //   <a class="link" id="link5">Audio Visualizer</a>
-  //   <a class="link" id="link2">Gallery</a>
-  //   <a class="link" id="link1">About this website</a>
-  //   <a class="currentpage" id="link4">Portfolio</a>
-  // </div>
-  // `;
   const portfolioContent = `
   <h1 class="header-text" id="header-text">About the author</h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
@@ -188,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <!-- same image, no blur -->
     <img src="images/PgConnectsHelsinki2.jpg" alt="Maude313" class="author-image"></img>
   </div>
-  <h2 id="aboutthiswebsite"><br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA Finland's hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!<br><br>Last update January 10th 2024
+  <h2 id="aboutthiswebsite"><br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA Finland's hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!<br><br><a class="embedded-link" id="link6">Click here to contact me!</a><br><br>Last update January 10th 2024
   </h2>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
@@ -225,6 +213,19 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
   const puzzleContent = `
   
+  `;
+  const contactMeContent = `
+  <h1 class="header-text" id="header-text"></h1>
+  <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
+  <iframe class="contact-form" src="https://docs.google.com/forms/d/e/1FAIpQLScEjkB1yoppt8g0LvWQjAezYez15FSdH_O8IigqFMS01SKyRQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  <h2 id="aboutthiswebsite"><br><br></h2>
+  <div class="navbar">
+    <a class="link" id="link3">Back to start</a>
+    <a class="link" id="link5">Audio Visualizer</a>
+    <a class="link" id="link2">Gallery</a>
+    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link4">About the author</a>
+  </div>
   `;
 
   // Audio visuals: License MIT, Author Special Agent Squeaky (specialagentsqueaky.com).
@@ -366,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
           warpInProcess = true;
           handleWarp();
         }
-        else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent || contentContainer.innerHTML === audioVisualizerContent) {
+        else if (contentContainer.innerHTML === aboutContent || contentContainer.innerHTML === portfolioContent || contentContainer.innerHTML === audioVisualizerContent || contentContainer.innerHTML === contactMeContent) {
           contentContainer.innerHTML = galleryContent;
         }
         audioVisualsOn = false;
@@ -412,6 +413,11 @@ document.addEventListener('DOMContentLoaded', function () {
         audioIsPlaying = false;
         audioVisualsOn = false;
         break
+      case 'link6':
+        event.preventDefault();
+        audioVisualsOn = false;
+        contentContainer.innerHTML = contactMeContent;
+        break;
       case 'toggle_full_screen':
         break;
       case 'aboutthiswebsite':

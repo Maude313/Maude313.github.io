@@ -10,13 +10,11 @@
 
 // Lisättävää:
 
-// Royalty free -kappaleita
 // Kuvia galleriaan
 // Minipeli
 // Siirtymä galleriasta takaisin alkuun ilman sivun uudelleenlatausta
 // Zoomaus gallerian kuviin klikattaessa
-// Lisätään full screen -buttoniin tarkistus onko mobiili vai ei
-
+// Kävijälaskuri (evästeilmoitus?)
 
 
 
