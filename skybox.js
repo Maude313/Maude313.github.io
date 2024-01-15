@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let analyzer = null;
 
   function audioVisuals() {
+
     // Initialize the audio context and analyzer
     const audioCtx = new AudioContext();
     // Get the audio tag
@@ -286,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderFrame() {
       
-      if (audioVisualsOn || audioIsPlaying) {
+      if (audioVisualsOn && audioIsPlaying) {
         
         // Update frequency data array with the latest data
         analyzer.getByteFrequencyData(frequencyData);
