@@ -53,22 +53,6 @@ html, body {
     overflow: hidden;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 .link {
     z-index: 1; /* Place the text above the background */
     position: absolute;
@@ -402,6 +386,7 @@ a {
     }
     ::-webkit-scrollbar {
         -webkit-appearance: none;
+        width: 4px;
     }
 }
 
@@ -416,7 +401,7 @@ a {
         font-size: 0.8rem;
     }
     #aboutthiswebsite {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     #audiovisualizer-text {
         font-size: 0.8rem;
@@ -426,10 +411,11 @@ a {
     }
     .header-text {
         font-size: 1.2rem;
+        padding-top: 1%;
     }
     .navbar {
         padding: 4% 6%;
-        bottom: 7%;
+        bottom: 2%;
     }
     #toggle_full_screen {
         display: none; /* Hide the button */
@@ -452,6 +438,12 @@ a {
     }
     ::-webkit-scrollbar {
         -webkit-appearance: none;
+        width: 4px;
+    }
+    .background-box,
+    .background-box-header {
+        padding: 5px;
+        border-radius: 10px;
     }
 }
 

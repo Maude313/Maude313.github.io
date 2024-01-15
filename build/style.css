@@ -53,22 +53,6 @@ html, body {
     overflow: hidden;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 .link {
     z-index: 1; /* Place the text above the background */
     position: absolute;
@@ -186,24 +170,23 @@ a {
     max-height: 55%;
     overflow-y: auto;
 }
-/* width */
+
 ::-webkit-scrollbar {
     width: 15px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px rgb(40, 52, 56);
     border-radius: 10px;
-    color:  rgb(40, 52, 56, 50%);
+    color: rgb(40, 52, 56, 50%);
+}
 
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: rgb(4, 4, 4, 50%);
     border-radius: 10px;
-  }
+}
+
 .background-box-header {
     display: inline-block;  
     background-color: rgba(0, 0, 0, 0.5); 
@@ -396,11 +379,14 @@ a {
     .author-image {
         width: auto;
         height: 30vh;
-
     }
     .placeholder {
         top: 45%;
         right: 2%;
+    }
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 4px;
     }
 }
 
@@ -415,7 +401,7 @@ a {
         font-size: 0.8rem;
     }
     #aboutthiswebsite {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     #audiovisualizer-text {
         font-size: 0.8rem;
@@ -425,10 +411,11 @@ a {
     }
     .header-text {
         font-size: 1.2rem;
+        padding-top: 1%;
     }
     .navbar {
         padding: 4% 6%;
-        bottom: 7%;
+        bottom: 2%;
     }
     #toggle_full_screen {
         display: none; /* Hide the button */
@@ -441,7 +428,6 @@ a {
         width: auto;
         height: 24vh;
     }
-
     .author-image {
         width: auto;
         height: 23vh;
@@ -449,6 +435,15 @@ a {
     .placeholder {
         top: 42%;
         right: 1%;
+    }
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 4px;
+    }
+    .background-box,
+    .background-box-header {
+        padding: 5px;
+        border-radius: 10px;
     }
 }
 

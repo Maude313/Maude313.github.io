@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
     <a class="link" id="link1">About this website</a>
-    <a class="currentpage" id="link4">About the author</a>
+    <a class="currentpage">About the author</a>
   </div>
   `;
   const audioVisualizerContent = `
