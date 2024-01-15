@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
  
   // InnerHTML content to upload without loading new page
   const startContent = `
-  <h1 class="header-text" id="header-text"><span  class="background-box">You must first fail to reach your ultimate goal</span></h1>
+  <h1 class="header-text" id="header-text"><span class="background-box-header">You must first fail to reach your ultimate goal</span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <h2 id="aboutthiswebsite"><br><br></h2>
   <div class="navbar">
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
   `;
   const galleryContent = `
   <div id='fade-in-content'>
-    <h1 class="header-text" id="header-text"><span  class="background-box">Gallery</span></h1>
+    <h1 class="header-text" id="header-text"><span class="background-box-header">Gallery</span></h1>
   </div>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <div class="navbar">
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
   `;
   const portfolioContent = `
-  <h1 class="header-text" id="header-text"><span  class="background-box">About the author</span></h1>
+  <h1 class="header-text" id="header-text"><span class="background-box-header">About the author</span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <div class="placeholder">
     <!-- blurred background image 1 for blurred edge -->
@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded', function () {
     <!-- same image, no blur -->
     <img src="images/PgConnectsHelsinki2.jpg" alt="Maude313" class="author-image"></img>
   </div>
-  <h2 id="aboutthiswebsite">
-    <span  class="background-box">
-      <br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA Finland's hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!<br><br><a class="embedded-link" id="link6">Click here to contact me!</a><br><br>Last update January 10th 2024
-    </span>
-  </h2>
+    <h2 id="aboutthiswebsite" class="background-box">
+      <div>
+        <br>Hi! My name is Maura Ruopsa. This web page is my portfolio. I will make updates soon! As you will notice, it's a work in progress still. I graduated as a software developer in December 2023. In my studies I specialized in game programming and did an internship at PHZ Game Studios from March to May 2023 and again during the fall semester, working on our student team's mobile game demo project. I'm still involved with the project. I'm a volunteer at IGDA Porvoo hub - been for over a year now. Check out IGDA Finland's hubs and their cool events: <a target="_blank" href="https://www.igda.fi/hubs">https://www.igda.fi/hubs</a><br><br>Later on I will let you know more about what I've done so far. See you around!<br><br><a class="embedded-link" id="link6">Click here to contact me!</a><br><br>Last update January 10th 2024
+      </div>
+    </h2>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
   `;
   const audioVisualizerContent = `
-  <h1 class="header-text" id="header-text"><span  class="background-box">Audio Visualizer</span></h1>
+  <h1 class="header-text" id="header-text"><span class="background-box-header">Audio Visualizer</span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <div class="audiovisualizer-content">
     <div class="audiovisualizer-text">
