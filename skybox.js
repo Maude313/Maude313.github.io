@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const startContent = `
   <h1 class="header-text" id="header-text"><span class="background-box-header">You must first fail to reach your ultimate goal</span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <p id="aboutthiswebsite"><br><br></p>
+  <p id="aboutthiswebsite"><br><br></span></p>
   <div class="navbar">
     <a class="currentpage" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
@@ -198,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="audioButtons">
       <a id="playAudio" class="link">Play Audio</a>
       <a id="stopAudio" class="link">Pause Audio</a>
+      <i class="fa-solid fa-volume-high"><p><input type="range" min="1" max="100" class="slider" id="volumeRange"></p></i>
+      
     </div>
     <div class="visualizer-container"></div>
   </div>
@@ -228,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link4">About the author</a>
   </div>
   `;
+  // <p>Volume: <i id="volume-value"></i></p>
 
   // Audio visuals: License MIT, Author Special Agent Squeaky (specialagentsqueaky.com).
   // Modified by myself to fit my purposes.
@@ -243,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
   let audioSource = null;
   let analyzer = null;
+  let volumeValue = 0.50;
 
   function audioVisuals() {
 
@@ -269,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    // // Get the visualizer container
+    // Get the visualizer container
     visualizerContainer = document.querySelector(".visualizer-container");
     visualizerContainer.setAttribute('id', "visualizer-container-id");
 
@@ -284,6 +288,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
       }
       shouldCreateVisuals = false;
+    }
+
+    // Slider for volume
+    let slider = document.getElementById("volumeRange");
+    let sliderValue;
+
+    slider.oninput = function() {
+
+      sliderValue = parseInt(this.value, 10); // Parse the value to an integer
+      sliderValue = Math.min(100, Math.max(0, sliderValue)); // Ensure it's within a valid range, 0 to 100
+  
+      volumeValue = sliderValue / 100; // Map the integer value back to a float value between 0 and 1
+      
+      audio.volume = volumeValue;
     }
 
     function renderFrame() {
@@ -344,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderFrame();
 
-    audio.volume = 0.50;
+    audio.volume = volumeValue;
     if (playButtonSelected) {
       audio.play();
     }
@@ -433,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         break
       default:
-        contentContainer.innerHTML = contentContainer.innerHTML;
+        // contentContainer.innerHTML = contentContainer.innerHTML;
         break
     }
     console.log("content " + contentContainer.innerHTML);

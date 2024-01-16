@@ -1,4 +1,4 @@
-// TO DO
+// TODO
 
 // Ongelmia:
 // Gallerianäkymän cameraControls nykii
@@ -15,6 +15,11 @@
 // Siirtymä galleriasta takaisin alkuun ilman sivun uudelleenlatausta
 // Zoomaus gallerian kuviin klikattaessa
 // Kävijälaskuri (evästeilmoitus?)
+// Mouse invert
+// Pyöritys niin, että osoitin pysyy paikallaan
+// Käyttöohje alkuun
+// Volumen säätö
+
 
 
 
