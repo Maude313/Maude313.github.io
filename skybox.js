@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <div id="aboutthiswebsite">
     <span class="background-box">
       This page is created by using an AI skybox tool by Blockade Labs,<br>
-      Three.js, a 3D JavaScript library and my imagination.<br>The font is from <a target="_blank" href="https://fontlibrary.org/">fontlibrary.org</a>.<br>
+      Three.js, a 3D JavaScript library and my imagination.<br>
       The warp drive effect is copied and edited from <a target="_blank" href="https://codepen.io/NiklasKnaack/pen/OmwgKb">codepen.io/NiklasKnaack/pen/OmwgKb</a>.<br>
       You can look around by left clicking and dragging with the mouse, or in the case of a touch screen use your finger.
     </span>

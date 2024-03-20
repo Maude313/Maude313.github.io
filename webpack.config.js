@@ -13,6 +13,7 @@ mode: "production", //"development"
       patterns: [
         { from: "images", to: "images" },
         { from: "audio", to: "audio" },
+        { from: "fonts", to: "fonts" },
         { from: "style.css", to: "./" },
         { from: "index.html", to: "./" },
       ],

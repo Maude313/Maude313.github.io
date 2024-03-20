@@ -18,8 +18,6 @@
 // Mouse invert
 // Pyöritys niin, että osoitin pysyy paikallaan
 // Käyttöohje alkuun
-// Volumen säätö
-
 
 
 

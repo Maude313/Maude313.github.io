@@ -19,18 +19,24 @@
     }
 }
 
+@font-face {
+    font-family: 'XoloniumRegular';
+    src: url('/fonts/Xolonium-Regular.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     /* For Firefox */
     scrollbar-color: #1e262c #525760;
     scrollbar-width: thin;
+    font-family: 'XoloniumRegular';
 }
 
 .content {
     font-family: 'XoloniumRegular';
-    font-weight: normal;
-    font-style: normal;
     color: rgb(219, 246, 246);
     font-weight: bold;
     text-align: center;
