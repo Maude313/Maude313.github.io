@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Animation loop for camera controls and hovering effect
   function animateCamera() {
     
-    // update the time
+    // Update the time
     const delta = clock.getDelta();
     const hasControlsUpdated = cameraControls.update(delta);
     
