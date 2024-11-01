@@ -112,16 +112,18 @@ a {
 
 .navbar {
     position: absolute;
-    bottom: 5%;
+    bottom: 0%;
     width: 100%;
-    padding-right: 5%;
-    padding-left: 5%;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-bottom: 5%;
+    padding-top: 9%;
     display: flex;
     justify-content: space-between; /* Distribute space evenly between links */
-    margin: 0 1%;
+    margin: 0 0%;
     max-width: 100%;
-    /* background-color: #555; */
-    
+    background-image: linear-gradient(transparent, black);   
+
 }
 
 .navbar a {
@@ -169,6 +171,17 @@ a {
     position: absolute; 
     top: 15%;
     left: 50%;
+    width: 60%;
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    z-index: 1; /* Place the text above the background */
+    font-size: 2rem;
+    text-align: center;
+}
+.header-text-start-page {
+    position: absolute; 
+    top: 20%;
+    left: 50%;
+    width: 60%;
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 1; /* Place the text above the background */
     font-size: 2rem;
@@ -199,10 +212,12 @@ a {
 .background-box-header {
     display: inline-block;  
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
+    padding: 1%;
     border-radius: 15px;
     box-shadow: 0px 1px 8px #97b6e9;
+    width: 60%;
 }
+
 
 .contact-form {
     min-width: 35%;
@@ -242,17 +257,21 @@ p {
     position: absolute;
     top: 30%;
     left: 50%;
+    width: 95%;
     transform: translate(-50%, -50%); /* Center the text precisely*/
-    z-index: 0; /* Place the text above the background */
+    z-index: 1; /* Place the text above the background */
 }
+
 #audiovisualizer-text {
     font-size: 1.2rem;
     text-align: center;
 }
+
 #audiovisualizer-title {
     font-size: 1.5rem;
     text-align: center;
 }
+
 .audioButtons {
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 0; /* Place the text above the background */
@@ -264,15 +283,19 @@ p {
     height: 4%;
     display: flex;
     justify-content: space-between; /* Distribute space evenly between links */
-    align-items: center;
 }
 
 .audioButtons a {
     position: relative;
     /* flex: 1; */
     text-align: center;
-    padding: 1% 3%; /* Adjust the padding to control the spacing */
     text-decoration: none;
+    padding: 1%;
+    color: white;
+    text-shadow: -1px -1px 0 gray,
+                1px -1px 0 gray,
+    
+    ;
 }
 
 /* The slider */
@@ -304,6 +327,8 @@ p {
     background: #f6f8f7;
     cursor: pointer; /* Cursor on hover */
     border-radius: 5px;
+    background-image: url("");
+    
 }
   
 .slider::-moz-range-thumb {
@@ -356,6 +381,10 @@ iframe {
     .header-text {
         font-size: 1.7rem;
     }
+    .header-text-start-page {
+        font-size: 1.7rem;
+        width: 100%;
+    }
     #toggle_full_screen {
         display: none; /* Hide the button */
     }
@@ -395,7 +424,7 @@ iframe {
         font-size: 1.2rem;
     }
     .audioButtons {
-        width: 70%;
+        width: 90%;
     }
     .slider {
         width: 80%;
@@ -403,8 +432,13 @@ iframe {
     .header-text {
         font-size: 1.4rem;
     }
+    .header-text-start-page {
+        font-size: 1.4rem;
+    }
     .navbar {
         padding: 4% 4%;
+        bottom: 0%;
+        justify-content: space-between; /* Distribute space evenly between links */
     }
     #toggle_full_screen {
         display: none; /* Hide the button */
@@ -450,24 +484,32 @@ iframe {
         font-size: 0.8rem;
     }
     #audiovisualizer-text {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
     #audiovisualizer-title {
         font-size: 1rem;
     }
     .audioButtons {
-        width: 80%;
+        width: 90%;
     }
     .slider {
         width: 80%;
+        height: 70%;
     }
     .header-text {
         font-size: 1.2rem;
         padding-top: 1%;
+        width: 90%;
+    }
+    .header-text-start-page {
+        font-size: 1.2rem;
+        padding-top: 10%;
+        padding-left: 1%;
+        padding-right: 1%;
     }
     .navbar {
-        padding: 4% 6%;
-        bottom: 2%;
+        padding: 4% 4%;
+        bottom: 0%;
     }
     #toggle_full_screen {
         display: none; /* Hide the button */
@@ -491,11 +533,6 @@ iframe {
     ::-webkit-scrollbar {
         -webkit-appearance: none;
         width: 4px;
-    }
-    .background-box {
-        padding: 5px;
-        border-radius: 10px;
-        width: 80%;
     }
 }
 

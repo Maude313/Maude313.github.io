@@ -125,15 +125,17 @@ document.addEventListener('DOMContentLoaded', function () {
  
   // InnerHTML content to upload without loading new page
   const startContent = `
-  <h1 class="header-text" id="header-text"><span class="background-box-header">Welcome!<br><br>Look around in this 3D world by left clicking and dragging with the mouse or in the case of a touch screen use your finger. </span></h1>
+  <h1 class="header-text-start-page" id="header-text"><div class="background-box-header">Welcome!<br><br>Look around in this 3D world by left clicking and dragging with the mouse or in the case of a touch screen use your finger.</div></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <p id="aboutthiswebsite"><br><br></span></p>
-  <div class="navbar">
-    <a class="currentpage" id="link3">Back to start</a>
-    <a class="link" id="link5">Audio Visualizer</a>
-    <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">Portfolio</a>
-    <a class="link" id="link4">About the author</a>
+  <div class="navbar-background-box">
+    <div class="navbar">
+      <a class="currentpage" id="link3">Back to start</a>
+      <a class="link" id="link5">Audio Visualizer</a>
+      <a class="link" id="link2">Gallery</a>
+      <a class="link" id="link1">My Portfolio</a>
+      <a class="link" id="link4">About the author</a>
+    </div>
   </div>
   `;
   const galleryContent = `
@@ -145,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="currentpage" id="link2">Gallery</a>
-    <a class="link" id="link1">Portfolio</a>
+    <a class="link" id="link1">My Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -181,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="currentpage" id="link1">Portfolio</a>
+    <a class="currentpage" id="link1">My Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -198,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">Portfolio</a>
+    <a class="link" id="link1">My Portfolio</a>
     <a class="currentpage">About the author</a>
   </div>
   `;
@@ -208,15 +210,14 @@ document.addEventListener('DOMContentLoaded', function () {
   <div class="audiovisualizer-content">
     <div class="audiovisualizer-text">
       <span class="background-box">
-        <p id="audiovisualizer-text">This music is available for commercial and non-commercial purposes. <a target=”_blank” href="https://freepd.com">freepd.com/</a></h2><br>
+        <p id="audiovisualizer-text">This music is available for commercial and non-commercial purposes.<br><a target=”_blank” href="https://freepd.com">freepd.com/<br><br></a></h2>
         <p id="audiovisualizer-title">Wisdom in the Sun - Written by Kevin MacLeod<br></h2>
       </span>
     </div>
     <div class="audioButtons">
-      <a id="playAudio" class="link">Play Audio</a>
-      <a id="stopAudio" class="link">Pause Audio</a>
-      <i class="fa-solid fa-volume-high"><p><input type="range" min="1" max="100" class="slider" id="volumeRange"></p></i>
-      
+      <a id="playAudio" class="link">Play Audio<br><i class="fa-solid fa-play"></i></a>
+      <a id="stopAudio" class="link">Pause Audio<br><i class="fa-solid fa-pause"></i></a>
+      <a><input type="range" min="1" max="100" class="slider" id="volumeRange"><br><i class="fa-solid fa-volume-high"></i></a>
     </div>
     <div class="visualizer-container"></div>
   </div>
@@ -224,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="currentpage" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">Portfolio</a>
+    <a class="link" id="link1">My Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -243,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">Portfolio</a>
+    <a class="link" id="link1">My Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
