@@ -215,8 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
       </span>
     </div>
     <div class="audioButtons">
-      <a id="playAudio" class="link">Play Audio<br><i class="fa-solid fa-play"></i></a>
-      <a id="stopAudio" class="link">Pause Audio<br><i class="fa-solid fa-pause"></i></a>
+      <a id="playAudio" class="link">Play Audio<br><i class="fa-solid fa-play" id="playAudio2"></i></a>
+      <a id="stopAudio" class="link">Pause Audio<br><i class="fa-solid fa-pause" id="stopAudio2"></i></a>
       <a><input type="range" min="1" max="100" class="slider" id="volumeRange"><br><i class="fa-solid fa-volume-high"></i></a>
     </div>
     <div class="visualizer-container"></div>
@@ -447,6 +447,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         break
       case 'stopAudio':
+        playButtonSelected = false;
+        audioIsPlaying = false;
+        audioVisualsOn = false;
+        break
+      case 'playAudio2':
+      if (!audioIsPlaying) {
+        playButtonSelected = true;
+        audioVisualsOn = true;
+        audioIsPlaying = true;
+        audioVisuals();
+      }
+      break
+      case 'stopAudio2':
         playButtonSelected = false;
         audioIsPlaying = false;
         audioVisualsOn = false;
