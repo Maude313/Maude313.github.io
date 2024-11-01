@@ -167,7 +167,7 @@ a {
 /* Style for the header text */
 .header-text {
     position: absolute; 
-    top: 10%;
+    top: 15%;
     left: 50%;
     transform: translate(-50%, -50%); /* Center the text precisely */
     z-index: 1; /* Place the text above the background */
@@ -198,7 +198,7 @@ a {
 
 .background-box-header {
     display: inline-block;  
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0px 1px 8px #97b6e9;
@@ -301,7 +301,7 @@ p {
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 18px; /* Slider handle height */
-    background: #f6f8f7; /* Green background */
+    background: #f6f8f7;
     cursor: pointer; /* Cursor on hover */
     border-radius: 5px;
 }
@@ -309,7 +309,7 @@ p {
 .slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #fdfefe; /* Green background */
+    background: #fdfefe;
     cursor: pointer; /* Cursor on hover */
     border-radius: 5px;
 }
@@ -335,6 +335,12 @@ p {
     width: 1.1%;
     height: 200%;
 }
+
+iframe {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
 
 /* Add a media query for smaller screens */
 @media screen and (max-width: 1000px) {
@@ -423,6 +429,11 @@ p {
         -webkit-appearance: none;
         width: 4px;
     }
+    .background-box {
+        padding: 5px;
+        border-radius: 10px;
+        width: 80%;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -481,10 +492,10 @@ p {
         -webkit-appearance: none;
         width: 4px;
     }
-    .background-box,
-    .background-box-header {
+    .background-box {
         padding: 5px;
         border-radius: 10px;
+        width: 80%;
     }
 }
 

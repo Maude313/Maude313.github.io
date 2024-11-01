@@ -125,14 +125,14 @@ document.addEventListener('DOMContentLoaded', function () {
  
   // InnerHTML content to upload without loading new page
   const startContent = `
-  <h1 class="header-text" id="header-text"><span class="background-box-header">You must first fail to reach your ultimate goal</span></h1>
+  <h1 class="header-text" id="header-text"><span class="background-box-header">Welcome!<br><br>Look around in this 3D world by left clicking and dragging with the mouse or in the case of a touch screen use your finger. </span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
   <p id="aboutthiswebsite"><br><br></span></p>
   <div class="navbar">
     <a class="currentpage" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link1">Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -145,26 +145,43 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="currentpage" id="link2">Gallery</a>
-    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link1">Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
   const aboutContent = `
+  <h1 class="header-text" id="header-text"><span class="background-box-header">Portfolio</span></h1>
   <a id="toggle_full_screen" class="toggle_full_screen">Full screen on/off</a>
-  <div id="aboutthiswebsite">
-    <span class="background-box">
+  <div id="aboutthiswebsite" class="background-box">
+      <p>
       This page is created by using an AI skybox tool by Blockade Labs,<br>
       Three.js, a 3D JavaScript library and my imagination.<br>
       The warp drive effect is copied and edited from <a target="_blank" href="https://codepen.io/NiklasKnaack/pen/OmwgKb">codepen.io/NiklasKnaack/pen/OmwgKb</a>.<br>
-      You can look around by left clicking and dragging with the mouse, or in the case of a touch screen use your finger.
-    </span>
-  </div>
+      You can look around by left clicking and dragging with the mouse, or in the case of a touch screen use your finger.<br><br>
+      We've been working on a mobile game demo in an indie team. Check out the trailer of Block Jam: Tower Balance (2024) I edited below.<br><br>
+      </p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/DDC_WrFBFkY?si=QNiDKpQ4LwDL8Rv3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p>
+      Credits: Erond Dumani, Jani Palo, Maura Ruopsa, Monika Fredriksson, Pauli Hamunen.<br><br>
+      My role in the project is programmer and data analyst. I integrated data analytics tools and programmed a state machine among other things.<br><br>
+      </p>
+      <p>
+      I had the opportunity to partake in the development and maintenance of the mobile game Castle War: Idle Island as an intern at PHZ Game Studios in 2023. Check out the amazing game below.<br>
+      </p>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/jocGtvxoMqM?si=b6umk4roTpZV5uHL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p>
+      My role was programmer and I took part in game design and building and deploying new releases on Google Play Store and Apple Store and much more.<br><br>
+      </p>
+      <p>
+      I will add more content to the portfolio slowly but surely!<br><br>
+      </p>
+      </div>
   <p id="viewport"></p>
   <div class="navbar">
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="currentpage" id="link1">About this website</a>
+    <a class="currentpage" id="link1">Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -181,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link1">Portfolio</a>
     <a class="currentpage">About the author</a>
   </div>
   `;
@@ -207,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="currentpage" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link1">Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
@@ -226,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <a class="link" id="link3">Back to start</a>
     <a class="link" id="link5">Audio Visualizer</a>
     <a class="link" id="link2">Gallery</a>
-    <a class="link" id="link1">About this website</a>
+    <a class="link" id="link1">Portfolio</a>
     <a class="link" id="link4">About the author</a>
   </div>
   `;
